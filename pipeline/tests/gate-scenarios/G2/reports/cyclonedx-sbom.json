@@ -1,0 +1,76 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "root",
+      "name": "onera-bill"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "laravel/framework-v12.62.0.0.0",
+      "group": "laravel",
+      "name": "framework",
+      "version": "v12.62.0",
+      "purl": "pkg:composer/laravel/framework@v12.62.0",
+      "properties": [
+        {
+          "name": "cdx:composer:package:isDevRequirement",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "guzzlehttp/guzzle-7.12.1.0.0",
+      "group": "guzzlehttp",
+      "name": "guzzle",
+      "version": "7.12.1",
+      "purl": "pkg:composer/guzzlehttp/guzzle@7.12.1",
+      "properties": [
+        {
+          "name": "cdx:composer:package:isDevRequirement",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "symfony/yaml-v7.4.13.0.0",
+      "group": "symfony",
+      "name": "yaml",
+      "version": "v7.4.13",
+      "purl": "pkg:composer/symfony/yaml@v7.4.13",
+      "properties": [
+        {
+          "name": "cdx:composer:package:isDevRequirement",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "root",
+      "dependsOn": [
+        "laravel/framework-v12.62.0.0.0"
+      ]
+    },
+    {
+      "ref": "laravel/framework-v12.62.0.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "guzzlehttp/guzzle-7.12.1.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "symfony/yaml-v7.4.13.0.0",
+      "dependsOn": []
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+name: H1 SBOM check on a public Laravel application
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: owner/name of a public Laravel application with a committed composer.lock
+        required: true
+      ref:
+        description: Tag or commit to analyse
+        required: true
+      php:
+        description: PHP version the application needs
+        default: '8.3'
+
+permissions:
+  contents: read
+
+env:
+  OSV_SCANNER_VERSION: '2.0.0'
+  CYCLONEDX_PHP_VERSION: '6.2.0'
+  CYCLONEDX_PY_SPEC: 'cyclonedx-python-lib[json-validation]>=7,<12'
+
+jobs:
+  sbom:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repository }}
+          ref: ${{ inputs.ref }}
+          path: subject
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Same-state audit and SBOM
+        working-directory: subject
+        run: |
+          mkdir -p ../reports/versions
+          composer global config --no-plugins allow-plugins.cyclonedx/cyclonedx-php-composer true
+          composer global require --no-interaction --no-progress "cyclonedx/cyclonedx-php-composer:${CYCLONEDX_PHP_VERSION}"
+          composer install --no-interaction --no-progress --prefer-dist --no-scripts --ignore-platform-reqs
+          set +e
+          composer audit --locked --format=json > ../reports/composer-audit.json
+          composer CycloneDX:make-sbom --spec-version=1.5 --output-format=JSON --output-file=../reports/cyclonedx-sbom.json
+          git diff --exit-code -- composer.json composer.lock; echo "LOCK_DIFF=$?" >> "$GITHUB_ENV"
+          echo "${{ inputs.repository }}@$(git rev-parse HEAD)" > ../reports/subject.txt
+
+      - name: SBOM check and OSV matching
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages "${CYCLONEDX_PY_SPEC}"
+          python3 tools/sbom_check.py --sbom reports/cyclonedx-sbom.json --lock subject/composer.lock --lock-diff-exit "$LOCK_DIFF" --out reports/sbom-check.json
+          mkdir -p "$HOME/bin"
+          curl -sSfL -o "$HOME/bin/osv-scanner" "https://github.com/google/osv-scanner/releases/download/v${OSV_SCANNER_VERSION}/osv-scanner_linux_amd64"
+          chmod +x "$HOME/bin/osv-scanner"
+          cp reports/cyclonedx-sbom.json reports/bom.cdx.json
+          "$HOME/bin/osv-scanner" scan source -L reports/bom.cdx.json --format json --output reports/osv.json || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports-h1-${{ github.run_id }}
+          path: reports/

@@ -1,0 +1,65 @@
+name: B0 functional baseline
+run-name: "B0 ${{ inputs.cold && 'cold' || 'warm' }} ${{ github.ref_name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      cold:
+        description: Cold run (no Composer cache)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  PHP_VERSION: '8.2'
+  PHPSTAN_LEVEL: '5'
+
+jobs:
+  b0:
+    name: B0 - tests and type checks
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Composer download cache (warm runs only)
+        if: ${{ !inputs.cold }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - name: Install locked dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Prepare application
+        run: |
+          cp -n .env.example .env
+          php artisan key:generate --force
+          mkdir -p reports/versions
+          php -r 'echo PHP_VERSION;' > reports/versions/php.txt
+          composer --version --no-ansi > reports/versions/composer.txt
+          vendor/bin/phpstan --version --no-ansi > reports/versions/phpstan.txt || true
+
+      - name: PHPUnit (application tests)
+        run: php artisan test --exclude-group=benchmark --log-junit reports/phpunit.xml
+
+      - name: PHPStan (report only)
+        run: bash tools/run_step.sh phpstan 0,1 "vendor/bin/phpstan analyse app routes config --level=$PHPSTAN_LEVEL --error-format=json --no-progress --memory-limit=2G > reports/phpstan.json"
+
+      - name: Run manifest
+        if: always()
+        run: python3 tools/run_manifest.py B0 ${{ inputs.cold && 'cold' || 'warm' }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-B0-${{ github.sha }}-${{ github.run_id }}
+          path: reports/

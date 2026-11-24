@@ -1,0 +1,3 @@
+osv-scanner version: 2.0.0
+commit: 0e986b49c4e7ee5aa545531c4a8908455f8a9e82
+built at: 2025-03-17T01:50:11Z

@@ -1,0 +1,9 @@
+{
+  "name": "sbom",
+  "ok_codes": [
+    0
+  ],
+  "exit_code": 0,
+  "seconds": 0.31,
+  "command": "composer CycloneDX:make-sbom --spec-version=1.5 --output-format=JSON --output-file=reports/cyclonedx-sbom.json"
+}

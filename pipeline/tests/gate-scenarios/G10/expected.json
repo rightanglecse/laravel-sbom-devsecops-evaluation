@@ -1,0 +1,6 @@
+{
+  "id": "G10",
+  "description": "Advisory only in a development package with no production use",
+  "expected_decision": "pass",
+  "expected_exit": 0
+}

@@ -1,0 +1,22 @@
+{
+  "config": "B0",
+  "cache": "warm",
+  "commit": "bf174a712f5220413518f76f08ce7f23e2159a99",
+  "ref": "bench-fixed",
+  "run_id": "45219251565",
+  "run_attempt": "1",
+  "workflow": "B0 functional baseline",
+  "runner_image": "ubuntu24 20261116.376.1",
+  "composer_lock_sha256": "4ec1c039d58dece35bd65d14b7d0b586b4f8f89851f0cc82576faafbcfd5aafa",
+  "tool_versions": {
+    "composer": [
+      "Composer version 2.11.2 2026-11-10 10:09:37"
+    ],
+    "php": [
+      "8.2.36"
+    ],
+    "phpstan": [
+      "PHPStan - PHP Static Analysis Tool 2.3.2"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "advisories": {
+    "guzzlehttp/guzzle": [
+      {
+        "advisoryId": "PKSA-g6",
+        "packageName": "guzzlehttp/guzzle",
+        "affectedVersions": "<7.15.2",
+        "title": "Test advisory PKSA-g6",
+        "cve": "CVE-2026-0006",
+        "link": "",
+        "sources": [],
+        "severity": null
+      }
+    ]
+  }
+}

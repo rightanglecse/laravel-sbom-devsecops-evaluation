@@ -1,0 +1,1767 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": []
+        }
+      ],
+      "results": [
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "bbe07db2a5409728a317cc50832a9506b44e4dc0468426479fcdb5653900a9ad9765ae2d74f572b4fc417419805b0a59079cfbed82f2c6b3558e4bda43565594_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/BillController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 152,
+                  "snippet": {
+                    "text": "            return response()->json([\n                'success' => false,\n                'message' => 'Failed to create bill: ' . $e->getMessage()\n            ], 500);"
+                  },
+                  "startColumn": 20,
+                  "startLine": 149
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Exception message or stack trace is returned to the client."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-exception-details-in-response"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "239b647864c459ca33399db375312f090ba91484eb56b3d97da3743c28b9abd9e676553379839f56cc82c8f6f6e8a3377fc97440eba862ad969c4d0ac6b87a17_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/BillController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 168,
+                  "snippet": {
+                    "text": "    public function show(Bill $bill)\n    {\n        $bill->load(['patient', 'doctor', 'creator', 'items.test']);\n\n        // If it's an API request (AJAX), return JSON\n        if (request()->wantsJson() || request()->ajax()) {\n            return response()->json($bill);\n        }\n\n        // Otherwise return the view\n        return view('bills.invoice', compact('bill'));\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 157
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "ce0439f5fa2e790ba8296050fe453e1e8fa8f5a16ac0c51b646f4dc9db1ba0109759af48c0e240cd3636f7e4b05c62cf71cd839c4232e7f89ae365f62e194e38_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/BillController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 190,
+                  "snippet": {
+                    "text": "    public function update(Request $request, Bill $bill)\n    {\n        $request->validate([\n            'status' => 'required|in:Pending,Paid,Partial',\n        ]);\n\n        // If status is being changed to Paid, update payment fields\n        if ($request->status === 'Paid' && $bill->status !== 'Paid') {\n            $bill->paid_amount = $bill->total_amount;\n            $bill->due_amount = 0;\n            $bill->status = 'Paid';\n            $bill->save();\n        } else {\n            $bill->update(['status' => $request->status]);\n        }\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Bill updated successfully'\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 170
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "27d8d19ce82dc0208d94a2a6162060b98158eab87ea046a4f12c3a7b7d59ae3f5fe840e5d86497f8674aedc57140512638b61b99e57a4ab193cbe0be0adf681a_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/BillController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 215,
+                  "snippet": {
+                    "text": "    public function destroy(Bill $bill)\n    {\n        DB::beginTransaction();\n\n        try {\n            $bill->items()->delete();\n            $bill->delete();\n\n            DB::commit();\n\n            return response()->json([\n                'success' => true,\n                'message' => 'Bill deleted successfully'\n            ]);\n\n        } catch (\\Exception $e) {\n            DB::rollBack();\n\n            return response()->json([\n                'success' => false,\n                'message' => 'Failed to delete bill: ' . $e->getMessage()\n            ], 500);\n        }\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 192
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "bbe07db2a5409728a317cc50832a9506b44e4dc0468426479fcdb5653900a9ad9765ae2d74f572b4fc417419805b0a59079cfbed82f2c6b3558e4bda43565594_1"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/BillController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 213,
+                  "snippet": {
+                    "text": "            return response()->json([\n                'success' => false,\n                'message' => 'Failed to delete bill: ' . $e->getMessage()\n            ], 500);"
+                  },
+                  "startColumn": 20,
+                  "startLine": 210
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Exception message or stack trace is returned to the client."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-exception-details-in-response"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "1a715ffbffe13828af1e2acf216c938e7f3f115b88547e9d8afe9b56277a5e51f364a240d9afb1a48dcf70ccdc977e8c0e33146af2b18c0b7ba8345d2ecbc2ae_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/DashboardController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 49,
+                  "endLine": 32,
+                  "snippet": {
+                    "text": "            DB::raw('MONTH(bill_date) as month'),"
+                  },
+                  "startColumn": 13,
+                  "startLine": 32
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-request-to-dangerous-sink"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "0a7d0fbfd7cf36f043084a48848aa57065843b35bc3058f8ef0f2336919872fd5912785c64d5c226b249ee242c9a7a57804b578fe7b1bdc50cc0d32446f1c267_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/DoctorController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 21,
+                  "snippet": {
+                    "text": "    public function show(Doctor $doctor)\n    {\n        return response()->json($doctor);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 18
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "27683211a205c5cd2b408d3c78e83e598ded3cf7facdd8a7ce62824d28a2dce01ac33be863cb8755fdb30d60f1164dd2a4febaf1c5b83e03aaf54ff807f5d4aa_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/DoctorController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 75,
+                  "snippet": {
+                    "text": "    public function update(Request $request, Doctor $doctor)\n    {\n        $request->validate([\n            'name' => 'required|string|max:255',\n            'mobile' => 'required|string|unique:doctors,mobile,' . $doctor->id,\n            'email' => 'nullable|email|unique:doctors,email,' . $doctor->id,\n            'specialty' => 'required|string',\n            'designation' => 'required|string',\n            'degree' => 'nullable|string',\n            'department' => 'required|string',\n            'visit_fee' => 'nullable|numeric|min:0',\n        ]);\n\n        $doctor->update($request->all());\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Doctor updated successfully',\n            'doctor' => $doctor\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 55
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "a0095d49426e309ffb16d3b4b9aee8d47e9333d7dd5768a5438251e177a6ba35f43cacc9ee2ac657a21f5e2a29862e0f5155cc62f17451293b6a724ab185dbe1_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/DoctorController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 41,
+                  "endLine": 68,
+                  "snippet": {
+                    "text": "        $doctor->update($request->all());"
+                  },
+                  "startColumn": 9,
+                  "startLine": 68
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-mass-assignment-request-all"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "8a980e97d4c72d68c5b9523313747f2c64c7b55216adcd8c58cb3fc3dd722fb9ae022e61f302a92c48b0314b1b7ef51891bded804b76b8c2781a4babd30707f3_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/DoctorController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 85,
+                  "snippet": {
+                    "text": "    public function destroy(Doctor $doctor)\n    {\n        $doctor->delete();\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Doctor deleted successfully'\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 77
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "e401c2e4775de03d4f03836e00b49ae744bc52451cfa297e2cc6bf25c3df544469dc9a747ea63972f130e917ca4bec42241e7cf6c74c1b5cd9dbb1deba2d87e8_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/PatientController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 81,
+                  "snippet": {
+                    "text": "    public function update(Request $request, Patient $patient)\n    {\n        $request->validate([\n            'name' => 'required|string|max:255',\n            'phone' => 'required|string|unique:patients,phone,' . $patient->id,\n            'email' => 'nullable|email|unique:patients,email,' . $patient->id,\n            'gender' => 'required|in:Male,Female,Other',\n            'age' => 'nullable|string|max:50',\n            'address' => 'nullable|string',\n            'blood_group' => 'nullable|string',\n        ]);\n\n        $patient->update($request->all());\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Patient updated successfully',\n            'patient' => $patient\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 62
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "266c5ede32a0ab97f230ccdce50d8cb4472ca128e3946ec3d0212850b697faa1b776e05af571c12ed7620adbf300300774dc2e472eff18fa3c1d144b74d335ea_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/PatientController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 42,
+                  "endLine": 74,
+                  "snippet": {
+                    "text": "        $patient->update($request->all());"
+                  },
+                  "startColumn": 9,
+                  "startLine": 74
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-mass-assignment-request-all"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "21d55c51d739f25c3fbf79ab259b88d0b74f18d530274227a2efba9bc362c61c7e4fb087d3a5da644e6da71adb66a9862e3408c8c43eaf7eaf6d9dfc424700e1_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/PatientController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 91,
+                  "snippet": {
+                    "text": "    public function destroy(Patient $patient)\n    {\n        $patient->delete();\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Patient deleted successfully'\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 83
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "cb527bd9864e94c55a2fe2b4e1910e11af355cfe4b0c064e00225d0c2972d020fbee42e046e11e80c6a19175790c38c23cc98a7764fb3ee1fdb15840bfebe09d_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/PatientController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 96,
+                  "snippet": {
+                    "text": "    public function show(Patient $patient)\n    {\n            return response()->json($patient);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 93
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "36ef18232d44625b1dc57867a2a5be6ce722d42f39f65a24a6d604fb19af2c4b36d9db3b32d6e54ea0c36c2b0e04462ef807a2671ba4c2a3fd3eb521866104b1_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 58,
+                  "endLine": 49,
+                  "snippet": {
+                    "text": "            $referral = Referral::create($request->all());"
+                  },
+                  "startColumn": 25,
+                  "startLine": 49
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-mass-assignment-request-all"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "298f6e63f6d8885c96975e2cc1e195ccce635d617ea74951b269e3788d1266b39e73e5e90ed04809ff0db5f1fa586c9bc8fdc1c8ef65951b7869721eaf97e50c_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 60,
+                  "snippet": {
+                    "text": "            return response()->json([\n                'success' => false,\n                'message' => 'Failed to add referral: ' . $e->getMessage()\n            ], 500);"
+                  },
+                  "startColumn": 20,
+                  "startLine": 57
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Exception message or stack trace is returned to the client."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-exception-details-in-response"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "36d1ca2f8595f77910165f11958174d6916653a4523daa59bc8edf591e11cd31b8babeeff19f86e6b877169ce684c43190aa27c9e91ac08f88553100d7d75258_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 68,
+                  "snippet": {
+                    "text": "    public function show(Referral $referral)\n    {\n        return response()->json($referral);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 65
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "e4ce1608c7230c41be6ec12af256a14ef1b94af239aa95171b72bdf123bff8a4e0d120b26bee9dc197616187e5d97f89d4fc7e5e94b43b2ccb30563f2f5fd142_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 93,
+                  "snippet": {
+                    "text": "    public function update(Request $request, Referral $referral)\n    {\n        $request->validate([\n            'code' => 'required|string|unique:referrals,code,' . $referral->id,\n            'name' => 'required|string|max:255',\n            'phone' => 'required|string|unique:referrals,phone,' . $referral->id,\n            'email' => 'nullable|email',\n        ]);\n\n        try {\n            $referral->update($request->all());\n\n            return response()->json([\n                'success' => true,\n                'message' => 'Referral updated successfully!'\n            ]);\n        } catch (\\Exception $e) {\n            return response()->json([\n                'success' => false,\n                'message' => 'Failed to update referral: ' . $e->getMessage()\n            ], 500);\n        }\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 71
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "32f127b6e1fd7512da7652209554f5c26256817370a14aff8f660990d1f72aa5ea330716c26f34990c3aae6cf4cb5e9517e7a19ae3d8fe2f73109b3397c8b479_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 47,
+                  "endLine": 81,
+                  "snippet": {
+                    "text": "            $referral->update($request->all());"
+                  },
+                  "startColumn": 13,
+                  "startLine": 81
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-mass-assignment-request-all"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "298f6e63f6d8885c96975e2cc1e195ccce635d617ea74951b269e3788d1266b39e73e5e90ed04809ff0db5f1fa586c9bc8fdc1c8ef65951b7869721eaf97e50c_1"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 91,
+                  "snippet": {
+                    "text": "            return response()->json([\n                'success' => false,\n                'message' => 'Failed to update referral: ' . $e->getMessage()\n            ], 500);"
+                  },
+                  "startColumn": 20,
+                  "startLine": 88
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Exception message or stack trace is returned to the client."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-exception-details-in-response"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "632058c32040eeb1aae3112c6d326c7addb75326728eee9e0c6645ebe1001f42b1c82d8eb535824b2b8ac6bd32f602adae2b28fd03f0f6066b80af31bdf1789f_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 111,
+                  "snippet": {
+                    "text": "    public function destroy(Referral $referral)\n    {\n        try {\n            $referral->delete();\n\n            return response()->json([\n                'success' => true,\n                'message' => 'Referral deleted successfully!'\n            ]);\n        } catch (\\Exception $e) {\n            return response()->json([\n                'success' => false,\n                'message' => 'Failed to delete referral: ' . $e->getMessage()\n            ], 500);\n        }\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 96
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "298f6e63f6d8885c96975e2cc1e195ccce635d617ea74951b269e3788d1266b39e73e5e90ed04809ff0db5f1fa586c9bc8fdc1c8ef65951b7869721eaf97e50c_2"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 109,
+                  "snippet": {
+                    "text": "            return response()->json([\n                'success' => false,\n                'message' => 'Failed to delete referral: ' . $e->getMessage()\n            ], 500);"
+                  },
+                  "startColumn": 20,
+                  "startLine": 106
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Exception message or stack trace is returned to the client."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-exception-details-in-response"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "6c80fc26e9cd5668616cedcd110b14db302cb44f992e461aa87d4b6cce521053d438affcf8b60445703e716205ebe87ffbd5bb988e1010c67c0a2b56a5208889_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/ReferralController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 54,
+                  "endLine": 119,
+                  "snippet": {
+                    "text": "                $reportData = Bill::select('ref_type', DB::raw('count(*) as total_patients'), DB::raw('SUM(total_amount) as generated_revenue'))"
+                  },
+                  "startColumn": 44,
+                  "startLine": 119
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-request-to-dangerous-sink"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "62ea16917a5dae4b088c93ce2dc3c99584eba83b749946f123145f58723c08b0b093d6808793951592b39c269bbefbb14c85a2db0359d32e073a120bf5223a2b_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/TestController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 21,
+                  "snippet": {
+                    "text": "    public function show(Test $test)\n    {\n        return response()->json($test);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 18
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "bda2a634f1e2e3aa187f69ef4dff8985ecbbe77573c661bd18f99fc766fd5a84ba644b82cd17c1ae39233a49e56297e9a23c65ab7c1d6943ee2bcc2f1d4e6542_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/TestController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 70,
+                  "snippet": {
+                    "text": "    public function update(Request $request, Test $test)\n    {\n        $request->validate([\n            'name' => 'required|string|max:255',\n            'department' => 'required|string',\n            'room' => 'nullable|string',\n            'rate' => 'required|numeric|min:0',\n            'status' => 'required|in:Active,Inactive',\n            'description' => 'nullable|string',\n        ]);\n\n        $test->update($request->all());\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Test updated successfully',\n            'test' => $test\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 52
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "7cc730f18f4312d223c2ee0334f63d4ad90846b5e31e5617071f7c8234099b24b32ad2bef733fb284f2c0a49456dbc4bc54492e5acb367ad93542f2b9ea661e8_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/TestController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 39,
+                  "endLine": 63,
+                  "snippet": {
+                    "text": "        $test->update($request->all());"
+                  },
+                  "startColumn": 9,
+                  "startLine": 63
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-mass-assignment-request-all"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "d1ffe8889a09373f898a4e3b1a7b804e94edf188bd8a721d1fe0373c4b0eaba09f78416279575151d6171c65f344864409cc473c8d227a88ac00043127dc474e_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/TestController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 6,
+                  "endLine": 80,
+                  "snippet": {
+                    "text": "    public function destroy(Test $test)\n    {\n        $test->delete();\n\n        return response()->json([\n            'success' => true,\n            'message' => 'Test deleted successfully'\n        ]);\n    }"
+                  },
+                  "startColumn": 5,
+                  "startLine": 72
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Controller action receives a model but performs no authorization check."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-missing-authorization"
+        },
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "907cd35feae5c68999e7e16ac66bbf53eec67c1860ee4610a17202cc8dc5881c7ba16c263ba57803dddb15300304507066fef4a1fb3e65538638549b55ce966f_0"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/TestController.php",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 26,
+                  "endLine": 85,
+                  "snippet": {
+                    "text": "            ->select('id', 'name', 'department', 'room', 'rate')"
+                  },
+                  "startColumn": 22,
+                  "startLine": 85
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation."
+          },
+          "properties": {},
+          "ruleId": "security.laravel-request-to-dangerous-sink"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "Semgrep OSS",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Raw SQL is built by string concatenation. Use parameter bindings instead."
+              },
+              "help": {
+                "markdown": "Raw SQL is built by string concatenation. Use parameter bindings instead.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Raw SQL is built by string concatenation. Use parameter bindings instead.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-raw-sql-concatenation",
+              "name": "security.laravel-raw-sql-concatenation",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-raw-sql-concatenation"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "User data flows into the host portion of this manually-constructed URL. This could allow an attacker to send data to their own server, potentially exposing sensitive data such as cookies or authorization information sent with this request. They could also probe internal servers or other resources that the server running this code can access. (This is called server-side request forgery, or SSRF.) Do not allow arbitrary hosts. Instead, create an allowlist for approved hosts, or hardcode the correct host."
+              },
+              "help": {
+                "markdown": "User data flows into the host portion of this manually-constructed URL. This could allow an attacker to send data to their own server, potentially exposing sensitive data such as cookies or authorization information sent with this request. They could also probe internal servers or other resources that the server running this code can access. (This is called server-side request forgery, or SSRF.) Do not allow arbitrary hosts. Instead, create an allowlist for approved hosts, or hardcode the correct host.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-url-host.tainted-url-host)\n - [https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)\n",
+                "text": "User data flows into the host portion of this manually-constructed URL. This could allow an attacker to send data to their own server, potentially exposing sensitive data such as cookies or authorization information sent with this request. They could also probe internal servers or other resources that the server running this code can access. (This is called server-side request forgery, or SSRF.) Do not allow arbitrary hosts. Instead, create an allowlist for approved hosts, or hardcode the correct host.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-url-host.tainted-url-host",
+              "id": "php.lang.security.injection.tainted-url-host.tainted-url-host",
+              "name": "php.lang.security.injection.tainted-url-host.tainted-url-host",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-918: Server-Side Request Forgery (SSRF)",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2025 - Broken Access Control",
+                  "OWASP-A10:2021 - Server-Side Request Forgery (SSRF)",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-url-host.tainted-url-host"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Unfiltered request data is passed to a model. Pass validated data instead."
+              },
+              "help": {
+                "markdown": "Unfiltered request data is passed to a model. Pass validated data instead.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Unfiltered request data is passed to a model. Pass validated data instead.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-mass-assignment-request-all",
+              "name": "security.laravel-mass-assignment-request-all",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-915",
+                  "MEDIUM CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-mass-assignment-request-all"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "HTTP method [$METHOD] to Laravel route $ROUTE_NAME is vulnerable to SQL injection via string concatenation or unsafe interpolation."
+              },
+              "help": {
+                "markdown": "HTTP method [$METHOD] to Laravel route $ROUTE_NAME is vulnerable to SQL injection via string concatenation or unsafe interpolation.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.laravel.security.laravel-api-route-sql-injection.laravel-api-route-sql-injection)\n - [https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Laravel_Cheat_Sheet.md](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Laravel_Cheat_Sheet.md)\n",
+                "text": "HTTP method [$METHOD] to Laravel route $ROUTE_NAME is vulnerable to SQL injection via string concatenation or unsafe interpolation.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.laravel.security.laravel-api-route-sql-injection.laravel-api-route-sql-injection",
+              "id": "php.laravel.security.laravel-api-route-sql-injection.laravel-api-route-sql-injection",
+              "name": "php.laravel.security.laravel-api-route-sql-injection.laravel-api-route-sql-injection",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2017 - Injection",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.laravel.security.laravel-api-route-sql-injection.laravel-api-route-sql-injection"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "SSL verification is disabled but should not be (currently CURLOPT_SSL_VERIFYPEER= $IS_VERIFIED)"
+              },
+              "help": {
+                "markdown": "SSL verification is disabled but should not be (currently CURLOPT_SSL_VERIFYPEER= $IS_VERIFIED)\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.curl-ssl-verifypeer-off.curl-ssl-verifypeer-off)\n - [https://www.saotn.org/dont-turn-off-curlopt_ssl_verifypeer-fix-php-configuration/](https://www.saotn.org/dont-turn-off-curlopt_ssl_verifypeer-fix-php-configuration/)\n",
+                "text": "SSL verification is disabled but should not be (currently CURLOPT_SSL_VERIFYPEER= $IS_VERIFIED)\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.curl-ssl-verifypeer-off.curl-ssl-verifypeer-off",
+              "id": "php.lang.security.curl-ssl-verifypeer-off.curl-ssl-verifypeer-off",
+              "name": "php.lang.security.curl-ssl-verifypeer-off.curl-ssl-verifypeer-off",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-319: Cleartext Transmission of Sensitive Information",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A02:2021 - Cryptographic Failures",
+                  "OWASP-A03:2017 - Sensitive Data Exposure",
+                  "OWASP-A04:2025 - Cryptographic Failures",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.curl-ssl-verifypeer-off.curl-ssl-verifypeer-off"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "This code uses a 224-bit hash function, which is deprecated or disallowed in some security policies. Consider updating to a stronger hash function such as SHA-384 or higher to ensure compliance and security."
+              },
+              "help": {
+                "markdown": "This code uses a 224-bit hash function, which is deprecated or disallowed in some security policies. Consider updating to a stronger hash function such as SHA-384 or higher to ensure compliance and security.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.audit.sha224-hash.sha224-hash)\n - [https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar3.ipd.pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar3.ipd.pdf)\n - [https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism/cyber-security-guidelines/guidelines-cryptography](https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism/cyber-security-guidelines/guidelines-cryptography)\n",
+                "text": "This code uses a 224-bit hash function, which is deprecated or disallowed in some security policies. Consider updating to a stronger hash function such as SHA-384 or higher to ensure compliance and security.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.audit.sha224-hash.sha224-hash",
+              "id": "php.lang.security.audit.sha224-hash.sha224-hash",
+              "name": "php.lang.security.audit.sha224-hash.sha224-hash",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-328: Use of Weak Hash",
+                  "HIGH CONFIDENCE",
+                  "OWASP-A02:2021 - Cryptographic Failures",
+                  "OWASP-A03:2017 - Sensitive Data Exposure",
+                  "OWASP-A04:2025 - Cryptographic Failures",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.audit.sha224-hash.sha224-hash"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "`Echo`ing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users."
+              },
+              "help": {
+                "markdown": "`Echo`ing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.echoed-request.echoed-request)\n - [https://www.php.net/manual/en/function.htmlentities.php](https://www.php.net/manual/en/function.htmlentities.php)\n - [https://www.php.net/manual/en/reserved.variables.request.php](https://www.php.net/manual/en/reserved.variables.request.php)\n - [https://www.php.net/manual/en/reserved.variables.post.php](https://www.php.net/manual/en/reserved.variables.post.php)\n - [https://www.php.net/manual/en/reserved.variables.get.php](https://www.php.net/manual/en/reserved.variables.get.php)\n - [https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n",
+                "text": "`Echo`ing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.echoed-request.echoed-request",
+              "id": "php.lang.security.injection.echoed-request.echoed-request",
+              "name": "php.lang.security.injection.echoed-request.echoed-request",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "OWASP-A07:2017 - Cross-Site Scripting (XSS)",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.echoed-request.echoed-request"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Exception message or stack trace is returned to the client."
+              },
+              "help": {
+                "markdown": "Exception message or stack trace is returned to the client.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Exception message or stack trace is returned to the client.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-exception-details-in-response",
+              "name": "security.laravel-exception-details-in-response",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-209",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-exception-details-in-response"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "User input is passed to a function that executes a shell command. This can lead to remote code execution."
+              },
+              "help": {
+                "markdown": "User input is passed to a function that executes a shell command. This can lead to remote code execution.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-exec.tainted-exec)\n - [https://owasp.org/Top10/A03_2021-Injection](https://owasp.org/Top10/A03_2021-Injection)\n",
+                "text": "User input is passed to a function that executes a shell command. This can lead to remote code execution.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-exec.tainted-exec",
+              "id": "php.lang.security.injection.tainted-exec.tainted-exec",
+              "name": "php.lang.security.injection.tainted-exec.tainted-exec",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-exec.tainted-exec"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "<- A new object is created where the class name is based on user input. This could lead to remote code execution, as it allows to instantiate any class in the application."
+              },
+              "help": {
+                "markdown": "<- A new object is created where the class name is based on user input. This could lead to remote code execution, as it allows to instantiate any class in the application.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-object-instantiation.tainted-object-instantiation)\n - [https://owasp.org/Top10/A03_2021-Injection](https://owasp.org/Top10/A03_2021-Injection)\n",
+                "text": "<- A new object is created where the class name is based on user input. This could lead to remote code execution, as it allows to instantiate any class in the application.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-object-instantiation.tainted-object-instantiation",
+              "id": "php.lang.security.injection.tainted-object-instantiation.tainted-object-instantiation",
+              "name": "php.lang.security.injection.tainted-object-instantiation.tainted-object-instantiation",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-470: Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-object-instantiation.tainted-object-instantiation"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "The function base_convert uses 64-bit numbers internally, and does not correctly convert large numbers. It is not suitable for random tokens such as those used for session tokens or CSRF tokens."
+              },
+              "help": {
+                "markdown": "The function base_convert uses 64-bit numbers internally, and does not correctly convert large numbers. It is not suitable for random tokens such as those used for session tokens or CSRF tokens.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.base-convert-loses-precision.base-convert-loses-precision)\n - [https://www.php.net/base_convert](https://www.php.net/base_convert)\n - [https://www.sjoerdlangkemper.nl/2017/03/15/dont-use-base-convert-on-random-tokens/](https://www.sjoerdlangkemper.nl/2017/03/15/dont-use-base-convert-on-random-tokens/)\n",
+                "text": "The function base_convert uses 64-bit numbers internally, and does not correctly convert large numbers. It is not suitable for random tokens such as those used for session tokens or CSRF tokens.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.base-convert-loses-precision.base-convert-loses-precision",
+              "id": "php.lang.security.base-convert-loses-precision.base-convert-loses-precision",
+              "name": "php.lang.security.base-convert-loses-precision.base-convert-loses-precision",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-190: Integer Overflow or Wraparound",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.base-convert-loses-precision.base-convert-loses-precision"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "File name based on user input risks server-side request forgery."
+              },
+              "help": {
+                "markdown": "File name based on user input risks server-side request forgery.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-filename.tainted-filename)\n - [https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29](https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29)\n",
+                "text": "File name based on user input risks server-side request forgery.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-filename.tainted-filename",
+              "id": "php.lang.security.injection.tainted-filename.tainted-filename",
+              "name": "php.lang.security.injection.tainted-filename.tainted-filename",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-918: Server-Side Request Forgery (SSRF)",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2025 - Broken Access Control",
+                  "OWASP-A10:2021 - Server-Side Request Forgery (SSRF)",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-filename.tainted-filename"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Found a request argument passed to an `ignore()` definition in a Rule constraint. This can lead to SQL injection."
+              },
+              "help": {
+                "markdown": "Found a request argument passed to an `ignore()` definition in a Rule constraint. This can lead to SQL injection.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.laravel.security.laravel-unsafe-validator.laravel-unsafe-validator)\n - [https://laravel.com/docs/9.x/validation#rule-unique](https://laravel.com/docs/9.x/validation#rule-unique)\n",
+                "text": "Found a request argument passed to an `ignore()` definition in a Rule constraint. This can lead to SQL injection.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.laravel.security.laravel-unsafe-validator.laravel-unsafe-validator",
+              "id": "php.laravel.security.laravel-unsafe-validator.laravel-unsafe-validator",
+              "name": "php.laravel.security.laravel-unsafe-validator.laravel-unsafe-validator",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2017 - Injection",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.laravel.security.laravel-unsafe-validator.laravel-unsafe-validator"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "The 'phpinfo' function may reveal sensitive information about your environment."
+              },
+              "help": {
+                "markdown": "The 'phpinfo' function may reveal sensitive information about your environment.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.phpinfo-use.phpinfo-use)\n - [https://www.php.net/manual/en/function.phpinfo](https://www.php.net/manual/en/function.phpinfo)\n - [https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/PhpinfosSniff.php](https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/PhpinfosSniff.php)\n",
+                "text": "The 'phpinfo' function may reveal sensitive information about your environment.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.phpinfo-use.phpinfo-use",
+              "id": "php.lang.security.phpinfo-use.phpinfo-use",
+              "name": "php.lang.security.phpinfo-use.phpinfo-use",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-200: Exposure of Sensitive Information to an Unauthorized Actor",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2021 - Broken Access Control",
+                  "OWASP-A01:2025 - Broken Access Control",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.phpinfo-use.phpinfo-use"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "`$QUERY` Detected string concatenation with a non-literal variable in a Doctrine QueryBuilder method. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead."
+              },
+              "help": {
+                "markdown": "`$QUERY` Detected string concatenation with a non-literal variable in a Doctrine QueryBuilder method. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.doctrine.security.audit.doctrine-orm-dangerous-query.doctrine-orm-dangerous-query)\n - [https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/query-builder.html#security-safely-preventing-sql-injection](https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/query-builder.html#security-safely-preventing-sql-injection)\n - [https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)\n",
+                "text": "`$QUERY` Detected string concatenation with a non-literal variable in a Doctrine QueryBuilder method. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.doctrine.security.audit.doctrine-orm-dangerous-query.doctrine-orm-dangerous-query",
+              "id": "php.doctrine.security.audit.doctrine-orm-dangerous-query.doctrine-orm-dangerous-query",
+              "name": "php.doctrine.security.audit.doctrine-orm-dangerous-query.doctrine-orm-dangerous-query",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2017 - Injection",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.doctrine.security.audit.doctrine-orm-dangerous-query.doctrine-orm-dangerous-query"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Str::markdown() is called without html_input set to escape or strip, so raw HTML is passed through."
+              },
+              "help": {
+                "markdown": "Str::markdown() is called without html_input set to escape or strip, so raw HTML is passed through.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Str::markdown() is called without html_input set to escape or strip, so raw HTML is passed through.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-markdown-raw-html",
+              "name": "security.laravel-markdown-raw-html",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-79",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-markdown-raw-html"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Calling assert with user input is equivalent to eval'ing."
+              },
+              "help": {
+                "markdown": "Calling assert with user input is equivalent to eval'ing.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.assert-use.assert-use)\n - [https://www.php.net/manual/en/function.assert](https://www.php.net/manual/en/function.assert)\n - [https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/AssertsSniff.php](https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/AssertsSniff.php)\n",
+                "text": "Calling assert with user input is equivalent to eval'ing.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.assert-use.assert-use",
+              "id": "php.lang.security.assert-use.assert-use",
+              "name": "php.lang.security.assert-use.assert-use",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+                  "HIGH CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.assert-use.assert-use"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Session key based on user input risks session poisoning. The user can determine the key used for the session, and thus write any session variable. Session variables are typically trusted to be set only by the application, and manipulating the session can result in access control issues."
+              },
+              "help": {
+                "markdown": "Session key based on user input risks session poisoning. The user can determine the key used for the session, and thus write any session variable. Session variables are typically trusted to be set only by the application, and manipulating the session can result in access control issues.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-session.tainted-session)\n - [https://en.wikipedia.org/wiki/Session_poisoning](https://en.wikipedia.org/wiki/Session_poisoning)\n",
+                "text": "Session key based on user input risks session poisoning. The user can determine the key used for the session, and thus write any session variable. Session variables are typically trusted to be set only by the application, and manipulating the session can result in access control issues.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-session.tainted-session",
+              "id": "php.lang.security.injection.tainted-session.tainted-session",
+              "name": "php.lang.security.injection.tainted-session.tainted-session",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-284: Improper Access Control",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2021 - Broken Access Control",
+                  "OWASP-A01:2025 - Broken Access Control",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-session.tainted-session"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "It looks like MD5 is used as a password hash. MD5 is not considered a secure password hash because it can be cracked by an attacker in a short amount of time. Use a suitable password hashing function such as bcrypt. You can use `password_hash($PASSWORD, PASSWORD_BCRYPT, $OPTIONS);`."
+              },
+              "help": {
+                "markdown": "It looks like MD5 is used as a password hash. MD5 is not considered a secure password hash because it can be cracked by an attacker in a short amount of time. Use a suitable password hashing function such as bcrypt. You can use `password_hash($PASSWORD, PASSWORD_BCRYPT, $OPTIONS);`.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.md5-used-as-password.md5-used-as-password)\n - [https://tools.ietf.org/html/rfc6151](https://tools.ietf.org/html/rfc6151)\n - [https://crypto.stackexchange.com/questions/44151/how-does-the-flame-malware-take-advantage-of-md5-collision](https://crypto.stackexchange.com/questions/44151/how-does-the-flame-malware-take-advantage-of-md5-collision)\n - [https://security.stackexchange.com/questions/211/how-to-securely-hash-passwords](https://security.stackexchange.com/questions/211/how-to-securely-hash-passwords)\n - [https://github.com/returntocorp/semgrep-rules/issues/1609](https://github.com/returntocorp/semgrep-rules/issues/1609)\n - [https://www.php.net/password_hash](https://www.php.net/password_hash)\n",
+                "text": "It looks like MD5 is used as a password hash. MD5 is not considered a secure password hash because it can be cracked by an attacker in a short amount of time. Use a suitable password hashing function such as bcrypt. You can use `password_hash($PASSWORD, PASSWORD_BCRYPT, $OPTIONS);`.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.md5-used-as-password.md5-used-as-password",
+              "id": "php.lang.security.md5-used-as-password.md5-used-as-password",
+              "name": "php.lang.security.md5-used-as-password.md5-used-as-password",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A02:2021 - Cryptographic Failures",
+                  "OWASP-A03:2017 - Sensitive Data Exposure",
+                  "OWASP-A04:2025 - Cryptographic Failures",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.md5-used-as-password.md5-used-as-password"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Callable based on user input risks remote code execution."
+              },
+              "help": {
+                "markdown": "Callable based on user input risks remote code execution.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-callable.tainted-callable)\n - [https://www.php.net/manual/en/language.types.callable.php](https://www.php.net/manual/en/language.types.callable.php)\n",
+                "text": "Callable based on user input risks remote code execution.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-callable.tainted-callable",
+              "id": "php.lang.security.injection.tainted-callable.tainted-callable",
+              "name": "php.lang.security.injection.tainted-callable.tainted-callable",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-94: Improper Control of Generation of Code ('Code Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-callable.tainted-callable"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation."
+              },
+              "help": {
+                "markdown": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Request input reaches a raw SQL, file-system or HTML response sink without sanitisation.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-request-to-dangerous-sink",
+              "name": "security.laravel-request-to-dangerous-sink",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89 / CWE-22 / CWE-79",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-request-to-dangerous-sink"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Model sets $guarded to an empty array, so every column can be mass assigned."
+              },
+              "help": {
+                "markdown": "Model sets $guarded to an empty array, so every column can be mass assigned.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Model sets $guarded to an empty array, so every column can be mass assigned.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-model-guarded-empty",
+              "name": "security.laravel-model-guarded-empty",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-915",
+                  "HIGH CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-model-guarded-empty"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Controller action receives a model but performs no authorization check."
+              },
+              "help": {
+                "markdown": "Controller action receives a model but performs no authorization check.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Controller action receives a model but performs no authorization check.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-missing-authorization",
+              "name": "security.laravel-missing-authorization",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-639",
+                  "MEDIUM CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-missing-authorization"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "A debug option is hard-coded to true in a committed configuration file."
+              },
+              "help": {
+                "markdown": "A debug option is hard-coded to true in a committed configuration file.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "A debug option is hard-coded to true in a committed configuration file.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-debug-flag-enabled-in-config",
+              "name": "security.laravel-debug-flag-enabled-in-config",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-489",
+                  "MEDIUM CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-debug-flag-enabled-in-config"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Detected a SQL query based on user input. This could lead to SQL injection, which could potentially result in sensitive data being exfiltrated by attackers. Instead, use parameterized queries and prepared statements."
+              },
+              "help": {
+                "markdown": "Detected a SQL query based on user input. This could lead to SQL injection, which could potentially result in sensitive data being exfiltrated by attackers. Instead, use parameterized queries and prepared statements.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.laravel.security.laravel-sql-injection.laravel-sql-injection)\n - [https://laravel.com/docs/8.x/queries](https://laravel.com/docs/8.x/queries)\n",
+                "text": "Detected a SQL query based on user input. This could lead to SQL injection, which could potentially result in sensitive data being exfiltrated by attackers. Instead, use parameterized queries and prepared statements.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.laravel.security.laravel-sql-injection.laravel-sql-injection",
+              "id": "php.laravel.security.laravel-sql-injection.laravel-sql-injection",
+              "name": "php.laravel.security.laravel-sql-injection.laravel-sql-injection",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2017 - Injection",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.laravel.security.laravel-sql-injection.laravel-sql-injection"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "`Printing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users."
+              },
+              "help": {
+                "markdown": "`Printing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.printed-request.printed-request)\n - [https://www.php.net/manual/en/function.htmlentities.php](https://www.php.net/manual/en/function.htmlentities.php)\n - [https://www.php.net/manual/en/reserved.variables.request.php](https://www.php.net/manual/en/reserved.variables.request.php)\n - [https://www.php.net/manual/en/reserved.variables.post.php](https://www.php.net/manual/en/reserved.variables.post.php)\n - [https://www.php.net/manual/en/reserved.variables.get.php](https://www.php.net/manual/en/reserved.variables.get.php)\n - [https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n",
+                "text": "`Printing user input risks cross-site scripting vulnerability. You should use `htmlentities()` when showing data to users.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.printed-request.printed-request",
+              "id": "php.lang.security.injection.printed-request.printed-request",
+              "name": "php.lang.security.injection.printed-request.printed-request",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "OWASP-A07:2017 - Cross-Site Scripting (XSS)",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.printed-request.printed-request"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Redirecting to the current request URL may redirect to another domain, if the current path starts with two slashes.  E.g. in https://www.example.com//attacker.com, the value of REQUEST_URI is //attacker.com, and redirecting to it will redirect to that domain."
+              },
+              "help": {
+                "markdown": "Redirecting to the current request URL may redirect to another domain, if the current path starts with two slashes.  E.g. in https://www.example.com//attacker.com, the value of REQUEST_URI is //attacker.com, and redirecting to it will redirect to that domain.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.redirect-to-request-uri.redirect-to-request-uri)\n - [https://www.php.net/manual/en/reserved.variables.server.php](https://www.php.net/manual/en/reserved.variables.server.php)\n - [https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html)\n",
+                "text": "Redirecting to the current request URL may redirect to another domain, if the current path starts with two slashes.  E.g. in https://www.example.com//attacker.com, the value of REQUEST_URI is //attacker.com, and redirecting to it will redirect to that domain.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.redirect-to-request-uri.redirect-to-request-uri",
+              "id": "php.lang.security.redirect-to-request-uri.redirect-to-request-uri",
+              "name": "php.lang.security.redirect-to-request-uri.redirect-to-request-uri",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-601: URL Redirection to Untrusted Site ('Open Redirect')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2021 - Broken Access Control",
+                  "OWASP-A01:2025 - Broken Access Control",
+                  "OWASP-A05:2017 - Broken Access Control",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.redirect-to-request-uri.redirect-to-request-uri"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Detected usage of vulnerable functions with user input, which could lead to SSRF vulnerabilities."
+              },
+              "help": {
+                "markdown": "Detected usage of vulnerable functions with user input, which could lead to SSRF vulnerabilities.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.wordpress-plugins.security.audit.wp-ssrf-audit.wp-ssrf-audit)\n - [https://developer.wordpress.org/reference/functions/wp_safe_remote_get/](https://developer.wordpress.org/reference/functions/wp_safe_remote_get/)\n - [https://developer.wordpress.org/reference/functions/wp_remote_get/](https://developer.wordpress.org/reference/functions/wp_remote_get/)\n - [https://patchstack.com/articles/exploring-the-unpatched-wordpress-ssrf/](https://patchstack.com/articles/exploring-the-unpatched-wordpress-ssrf/)\n",
+                "text": "Detected usage of vulnerable functions with user input, which could lead to SSRF vulnerabilities.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.wordpress-plugins.security.audit.wp-ssrf-audit.wp-ssrf-audit",
+              "id": "php.wordpress-plugins.security.audit.wp-ssrf-audit.wp-ssrf-audit",
+              "name": "php.wordpress-plugins.security.audit.wp-ssrf-audit.wp-ssrf-audit",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-918: Server-Side Request Forgery (SSRF)",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A10:2021 - Server-Side Request Forgery (SSRF)",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.wordpress-plugins.security.audit.wp-ssrf-audit.wp-ssrf-audit"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Static IV used with AES in CBC mode. Static IVs enable chosen-plaintext attacks against encrypted data."
+              },
+              "help": {
+                "markdown": "Static IV used with AES in CBC mode. Static IVs enable chosen-plaintext attacks against encrypted data.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.openssl-cbc-static-iv.openssl-cbc-static-iv)\n - [https://csrc.nist.gov/publications/detail/sp/800-38a/final](https://csrc.nist.gov/publications/detail/sp/800-38a/final)\n",
+                "text": "Static IV used with AES in CBC mode. Static IVs enable chosen-plaintext attacks against encrypted data.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.openssl-cbc-static-iv.openssl-cbc-static-iv",
+              "id": "php.lang.security.openssl-cbc-static-iv.openssl-cbc-static-iv",
+              "name": "php.lang.security.openssl-cbc-static-iv.openssl-cbc-static-iv",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-329: Generation of Predictable IV with CBC Mode",
+                  "HIGH CONFIDENCE",
+                  "OWASP-A02:2021 - Cryptographic Failures",
+                  "OWASP-A04:2025 - Cryptographic Failures",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.openssl-cbc-static-iv.openssl-cbc-static-iv"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`$mysqli->prepare(\"INSERT INTO test(id, label) VALUES (?, ?)\");`) or a safe library."
+              },
+              "help": {
+                "markdown": "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`$mysqli->prepare(\"INSERT INTO test(id, label) VALUES (?, ?)\");`) or a safe library.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.injection.tainted-sql-string.tainted-sql-string)\n - [https://owasp.org/www-community/attacks/SQL_Injection](https://owasp.org/www-community/attacks/SQL_Injection)\n",
+                "text": "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`$mysqli->prepare(\"INSERT INTO test(id, label) VALUES (?, ?)\");`) or a safe library.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.injection.tainted-sql-string.tainted-sql-string",
+              "id": "php.lang.security.injection.tainted-sql-string.tainted-sql-string",
+              "name": "php.lang.security.injection.tainted-sql-string.tainted-sql-string",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A01:2017 - Injection",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.injection.tainted-sql-string.tainted-sql-string"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Do not call 'extract()' on user-controllable data. If you must, then you must also provide the EXTR_SKIP flag to prevent overwriting existing variables."
+              },
+              "help": {
+                "markdown": "Do not call 'extract()' on user-controllable data. If you must, then you must also provide the EXTR_SKIP flag to prevent overwriting existing variables.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.deserialization.extract-user-data)\n - [https://www.php.net/manual/en/function.extract.php#refsect1-function.extract-notes](https://www.php.net/manual/en/function.extract.php#refsect1-function.extract-notes)\n",
+                "text": "Do not call 'extract()' on user-controllable data. If you must, then you must also provide the EXTR_SKIP flag to prevent overwriting existing variables.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.deserialization.extract-user-data",
+              "id": "php.lang.security.deserialization.extract-user-data",
+              "name": "php.lang.security.deserialization.extract-user-data",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-502: Deserialization of Untrusted Data",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A08:2017 - Insecure Deserialization",
+                  "OWASP-A08:2021 - Software and Data Integrity Failures",
+                  "OWASP-A08:2025 - Software or Data Integrity Failures",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.deserialization.extract-user-data"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Unescaped Blade output. Check that the value can never contain user input."
+              },
+              "help": {
+                "markdown": "Unescaped Blade output. Check that the value can never contain user input.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Unescaped Blade output. Check that the value can never contain user input.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-blade-unescaped-output",
+              "name": "security.laravel-blade-unescaped-output",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-79",
+                  "MEDIUM CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-blade-unescaped-output"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Routes are excluded from CSRF verification."
+              },
+              "help": {
+                "markdown": "Routes are excluded from CSRF verification.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>",
+                "text": "Routes are excluded from CSRF verification.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "id": "security.laravel-csrf-exclusion",
+              "name": "security.laravel-csrf-exclusion",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-352",
+                  "MEDIUM CONFIDENCE",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: security.laravel-csrf-exclusion"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Executing non-constant commands. This can lead to command injection. You should use `escapeshellarg()` when using command."
+              },
+              "help": {
+                "markdown": "Executing non-constant commands. This can lead to command injection. You should use `escapeshellarg()` when using command.\n\n#### \ud83d\udc8e Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>\n\n<b>References:</b>\n - [Semgrep Rule](https://semgrep.dev/r/php.lang.security.tainted-exec.tainted-exec)\n - [https://www.stackhawk.com/blog/php-command-injection/](https://www.stackhawk.com/blog/php-command-injection/)\n - [https://brightsec.com/blog/code-injection-php/](https://brightsec.com/blog/code-injection-php/)\n - [https://www.acunetix.com/websitesecurity/php-security-2/](https://www.acunetix.com/websitesecurity/php-security-2/)\n",
+                "text": "Executing non-constant commands. This can lead to command injection. You should use `escapeshellarg()` when using command.\n\ud83d\udc8e Enable cross-file analysis and Pro rules for free at sg.run/pro"
+              },
+              "helpUri": "https://semgrep.dev/r/php.lang.security.tainted-exec.tainted-exec",
+              "id": "php.lang.security.tainted-exec.tainted-exec",
+              "name": "php.lang.security.tainted-exec.tainted-exec",
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-94: Improper Control of Generation of Code ('Code Injection')",
+                  "MEDIUM CONFIDENCE",
+                  "OWASP-A03:2021 - Injection",
+                  "OWASP-A05:2025 - Injection",
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: php.lang.security.tainted-exec.tainted-exec"
+              }
+            }
+          ],
+          "semanticVersion": "1.95.0"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

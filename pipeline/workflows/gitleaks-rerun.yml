@@ -1,0 +1,57 @@
+name: Gitleaks re-run on fixed commits (C21)
+
+on:
+  workflow_dispatch:
+    inputs:
+      commits:
+        description: Space-separated commit SHAs
+        default: '4b74bfa 2bfcfae'
+
+permissions:
+  contents: read
+
+env:
+  GITLEAKS_VERSION: '8.21.2'
+
+jobs:
+  rerun:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Gitleaks
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz -C "$HOME/bin" gitleaks
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Scan each commit (working tree and the commit itself), default rules
+        run: |
+          mkdir -p reports
+          gitleaks version | tee reports/gitleaks-version.txt
+          for c in ${{ inputs.commits }}; do
+            full=$(git rev-parse "$c")
+            git worktree add "/tmp/wt-$c" "$full" > /dev/null
+            set +e
+            gitleaks dir "/tmp/wt-$c" --report-format sarif --report-path "reports/gitleaks-dir-$c.sarif" --exit-code 2 --redact --no-banner
+            echo "$?" > "reports/gitleaks-dir-$c.exit"
+            gitleaks git . --log-opts="-1 $full" --report-format sarif --report-path "reports/gitleaks-commit-$c.sarif" --exit-code 2 --redact --no-banner
+            echo "$?" > "reports/gitleaks-commit-$c.exit"
+            set -e
+            echo "$c = $full" >> reports/commits.txt
+          done
+          python3 - <<'PY'
+          import json, glob
+          for f in sorted(glob.glob("reports/*.sarif")):
+              d = json.load(open(f))
+              res = [r for run in d["runs"] for r in run.get("results", [])]
+              locs = [f"{r['ruleId']} {r['locations'][0]['physicalLocation']['artifactLocation']['uri']}:{r['locations'][0]['physicalLocation']['region'].get('startLine')}" for r in res]
+              print(f, "exit", open(f.replace(".sarif", ".exit")).read().strip(), "findings", len(res), *locs, sep="\n  ")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports-gitleaks-rerun
+          path: reports/

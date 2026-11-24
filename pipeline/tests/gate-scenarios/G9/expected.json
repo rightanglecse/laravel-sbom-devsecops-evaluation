@@ -1,0 +1,6 @@
+{
+  "id": "G9",
+  "description": "Blocking advisory covered by an approved, unexpired exception",
+  "expected_decision": "pass",
+  "expected_exit": 0
+}

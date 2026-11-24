@@ -1,0 +1,16 @@
+{
+  "advisories": {
+    "symfony/yaml": [
+      {
+        "advisoryId": "PKSA-g10",
+        "packageName": "symfony/yaml",
+        "affectedVersions": "<7.4.18",
+        "title": "Test advisory PKSA-g10",
+        "cve": "CVE-2026-109413",
+        "link": "",
+        "sources": [],
+        "severity": "high"
+      }
+    ]
+  }
+}

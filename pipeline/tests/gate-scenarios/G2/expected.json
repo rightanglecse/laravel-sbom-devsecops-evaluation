@@ -1,0 +1,6 @@
+{
+  "id": "G2",
+  "description": "Synthetic secret committed in application code",
+  "expected_decision": "block",
+  "expected_exit": 1
+}

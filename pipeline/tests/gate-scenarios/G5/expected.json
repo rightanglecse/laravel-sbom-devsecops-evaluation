@@ -1,0 +1,6 @@
+{
+  "id": "G5",
+  "description": "Transitive advisory on a request-handling package; no use evidence",
+  "expected_decision": "review",
+  "expected_exit": 2
+}

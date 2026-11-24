@@ -1,0 +1,9 @@
+{
+  "name": "sbom-check",
+  "ok_codes": [
+    0
+  ],
+  "exit_code": 0,
+  "seconds": 10.71,
+  "command": "python3 tools/sbom_check.py --sbom reports/cyclonedx-sbom.json --lock composer.lock --lock-diff-exit 0 --out reports/sbom-check.json"
+}

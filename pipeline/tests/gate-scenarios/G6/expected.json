@@ -1,0 +1,6 @@
+{
+  "id": "G6",
+  "description": "Advisory without a severity score",
+  "expected_decision": "review",
+  "expected_exit": 2
+}

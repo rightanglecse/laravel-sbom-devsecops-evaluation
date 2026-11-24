@@ -1,0 +1,16 @@
+id,class,cwe,locations,fixed_change,expected_detector,runtime_test
+S01,SQL injection,CWE-89,app/Http/Controllers/Clinic/PatientRecordController.php:26-29,Parameter binding in DB::select,Semgrep / Psalm taint,S01Test
+S02,SQL injection,CWE-89,app/Http/Controllers/Clinic/ClinicInvoiceController.php:13-16,whereRaw with bindings,Semgrep / Psalm taint,S02Test
+S03,SQL injection,CWE-89,app/Http/Controllers/Clinic/PatientRecordController.php:13-17,Allow-list of sort columns,Semgrep / Psalm taint,S03Test
+S04,Cross-site scripting,CWE-79,resources/views/clinic/notes/show.blade.php:9-9,Escaped Blade output,Semgrep (custom Blade rule),S04Test
+S05,Cross-site scripting,CWE-79,resources/views/clinic/notes/show.blade.php:10-10,CommonMark html_input=escape,Semgrep (custom rule),S05Test
+S06,Cross-site scripting,CWE-79,app/Http/Controllers/Clinic/PatientRecordController.php:37-44,e() on reflected input,Semgrep / Psalm taint,S06Test
+S07,Mass assignment,CWE-915,app/Models/StaffProfile.php:11-11;app/Http/Controllers/Clinic/StaffProfileController.php:20-20,Explicit $fillable,Semgrep,S07Test
+S08,Mass assignment,CWE-915,app/Http/Controllers/Clinic/ClinicInvoiceController.php:29-29,$request->validated data only,Semgrep,S08Test
+S09,Broken access control,CWE-639,app/Http/Controllers/Clinic/ClinicInvoiceController.php:36-39,Gate::authorize view policy,Semgrep (custom rule),S09Test
+S10,Broken access control,CWE-639,app/Http/Controllers/Clinic/PatientRecordController.php:50-57,Gate::authorize update policy,Semgrep (custom rule),S10Test
+S11,Hard-coded secret,CWE-798,app/Services/ClinicSmsGateway.php:7-9,Read key from config/env,Gitleaks,S11Test
+S12,Hard-coded secret,CWE-798,config/clinic.php:5-6,No default in env(),Gitleaks,S12Test
+S13,Insecure configuration (CSRF),CWE-352,app/Providers/ClinicServiceProvider.php:13-13,No CSRF exclusion,Semgrep (custom rule),S13Test
+S14,Information exposure (debug),CWE-209,app/Http/Controllers/Clinic/ClinicReportController.php:20-21;config/clinic.php:10-10,Generic error response; report(),Semgrep (custom rule),S14Test
+S15,Path traversal,CWE-22,app/Http/Controllers/Clinic/ClinicReportController.php:30-37,basename + allow-list,Semgrep / Psalm taint,S15Test

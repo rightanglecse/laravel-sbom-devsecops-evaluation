@@ -1,0 +1,6 @@
+{
+  "id": "G1",
+  "description": "Clean control: all mandatory reports present, no findings",
+  "expected_decision": "pass",
+  "expected_exit": 0
+}

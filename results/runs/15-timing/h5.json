@@ -1,0 +1,88 @@
+{
+  "summary": {
+    "B0_warm": {
+      "n": 10,
+      "median": 24.0,
+      "q1": 21.5,
+      "q3": 24.75,
+      "min": 19.0,
+      "max": 25.0
+    },
+    "B1_warm": {
+      "n": 10,
+      "median": 40.5,
+      "q1": 40.0,
+      "q3": 42.0,
+      "min": 30.0,
+      "max": 46.0
+    },
+    "F_warm": {
+      "n": 10,
+      "median": 51.0,
+      "q1": 50.25,
+      "q3": 53.5,
+      "min": 46.0,
+      "max": 60.0
+    },
+    "B0_cold": {
+      "n": 3,
+      "median": 26.0,
+      "q1": 25.0,
+      "q3": 32.5,
+      "min": 24.0,
+      "max": 39.0
+    },
+    "B1_cold": {
+      "n": 3,
+      "median": 40.0,
+      "q1": 38.5,
+      "q3": 41.0,
+      "min": 37.0,
+      "max": 42.0
+    },
+    "F_cold": {
+      "n": 3,
+      "median": 55.0,
+      "q1": 55.0,
+      "q3": 57.5,
+      "min": 55.0,
+      "max": 60.0
+    }
+  },
+  "tests": {
+    "F_vs_B0_warm": {
+      "U": 100.0,
+      "p": 1.1e-05,
+      "method": "exact",
+      "median_overhead_s": 27.0,
+      "overhead_pct": 112.5
+    },
+    "B1_vs_B0_warm": {
+      "U": 100.0,
+      "p": 1.1e-05,
+      "method": "exact",
+      "median_overhead_s": 16.5,
+      "overhead_pct": 68.8
+    },
+    "F_vs_B0_cold": {
+      "U": 9.0,
+      "p": 0.1,
+      "method": "exact",
+      "median_overhead_s": 29.0,
+      "overhead_pct": 111.5
+    },
+    "B1_vs_B0_cold": {
+      "U": 8.0,
+      "p": 0.2,
+      "method": "exact",
+      "median_overhead_s": 14.0,
+      "overhead_pct": 53.8
+    }
+  },
+  "verdict": {
+    "threshold_s": 90,
+    "F_minus_B0_warm_median_s": 27.0,
+    "H5": "supported"
+  },
+  "review_burden": null
+}

@@ -1,0 +1,42 @@
+{
+  "config": "F",
+  "cache": "warm",
+  "commit": "bf174a712f5220413518f76f08ce7f23e2159a99",
+  "ref": "bench-fixed",
+  "run_id": "45221217366",
+  "run_attempt": "1",
+  "workflow": "F SBOM-enabled DevSecOps framework",
+  "runner_image": "ubuntu24 20261116.376.1",
+  "composer_lock_sha256": "4ec1c039d58dece35bd65d14b7d0b586b4f8f89851f0cc82576faafbcfd5aafa",
+  "tool_versions": {
+    "composer": [
+      "Composer version 2.11.2 2026-11-10 10:09:37"
+    ],
+    "cyclonedx-php-composer": [
+      "name     : cyclonedx/cyclonedx-php-composer",
+      "descrip. : Creates CycloneDX Software Bill-of-Materials (SBOM) from PHP Composer projects"
+    ],
+    "gitleaks": [
+      "8.21.2"
+    ],
+    "osv-scanner": [
+      "osv-scanner version: 2.0.0",
+      "commit: 0e986b49c4e7ee5aa545531c4a8908455f8a9e82"
+    ],
+    "php": [
+      "8.2.36"
+    ],
+    "phpstan": [
+      "PHPStan - PHP Static Analysis Tool 2.3.2"
+    ],
+    "psalm-plugin": [
+      "laravel plugin enabled"
+    ],
+    "psalm": [
+      "Psalm 6.21.3@9fbfcc145eef219e602fa7cded83faf79fe20ffc"
+    ],
+    "semgrep": [
+      "1.95.0"
+    ]
+  }
+}

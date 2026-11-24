@@ -1,0 +1,2 @@
+GATE DECISION: BLOCK (exit 1)
+  counts: {'fix-now': 9, 'review': 22, 'defer': 0, 'info': 92, 'excepted': 0}

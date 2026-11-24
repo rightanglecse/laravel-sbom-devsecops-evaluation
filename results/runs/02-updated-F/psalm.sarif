@@ -1,0 +1,1 @@
+{"version":"2.1.0","$schema":"https:\/\/json.schemastore.org\/sarif-2.1.0.json","runs":[{"tool":{"driver":{"name":"Psalm","informationUri":"https:\/\/psalm.dev","version":"6.21.3@9fbfcc145eef219e602fa7cded83faf79fe20ffc"}},"results":[]}]}

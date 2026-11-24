@@ -1,0 +1,13 @@
+ID   Expected         Actual           OK  Reason
+G1   pass (0)         pass (0)         yes no findings
+G2   block (1)        block (1)        yes T3: secret committed in application code
+G3   block (1)        block (1)        yes T3: direct dependency, critical, fixed version available
+G4   block (1)        block (1)        yes T3: high-confidence SAST finding (error)
+G5   review (2)       review (2)       yes T4: no input-path evidence recorded
+G6   review (2)       review (2)       yes T1: required information missing (severity, scope or fix status)
+G7   incomplete (3)   incomplete (3)   yes sbom: tool exited with code 1; sbom: report cyclonedx-sbom.json missing or empty
+G8   incomplete (3)   incomplete (3)   yes semgrep: tool exited with code 2; semgrep: report semgrep.sarif missing or empty
+G9   pass (0)         pass (0)         yes EX: approved exception (owner thesis author, expires 2099-12-31): upgrade scheduled in rel
+G10  pass (0)         pass (0)         yes T2: development-only package; not installed in production
+
+10/10 scenarios returned the expected decision

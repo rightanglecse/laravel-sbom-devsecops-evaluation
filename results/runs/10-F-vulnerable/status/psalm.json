@@ -1,0 +1,11 @@
+{
+  "name": "psalm",
+  "ok_codes": [
+    0,
+    1,
+    2
+  ],
+  "exit_code": 0,
+  "seconds": 11.85,
+  "command": "vendor/bin/psalm --taint-analysis --no-progress --no-cache --report=reports/psalm.sarif"
+}

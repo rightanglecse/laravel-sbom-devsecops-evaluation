@@ -1,0 +1,30 @@
+{
+  "records": 35,
+  "cvss_only_queue": 25,
+  "rules_queue": 13,
+  "queue_reduction": 0.48,
+  "outcomes": {
+    "fix-now": 1,
+    "review": 12,
+    "defer": 22
+  },
+  "by_rule": {
+    "T1": 7,
+    "T2": 1,
+    "T3": 1,
+    "T4": 5,
+    "T5": 21
+  },
+  "relevant_final": 0,
+  "relevant_deferred_by_rules": [],
+  "relevant_missed_by_cvss_only": [],
+  "kappa": 0.0,
+  "rated_pairs": 35,
+  "epss_subset_n": 23,
+  "checks": {
+    "queue reduction >= 30%": true,
+    "100% of relevant advisories kept": true,
+    "kappa >= 0.60": false
+  },
+  "H4": "not supported"
+}

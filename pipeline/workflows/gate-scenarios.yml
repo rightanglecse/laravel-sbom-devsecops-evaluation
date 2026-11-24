@@ -1,0 +1,25 @@
+name: Gate acceptance scenarios
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scenarios:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run gate on every scenario and compare with the expected decision
+        run: |
+          mkdir -p reports
+          python3 tools/run_gate_scenarios.py tests/gate-scenarios --out reports/gate-scenarios.json | tee reports/gate-scenarios.txt
+          cat reports/gate-scenarios.txt >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gate-scenarios-${{ github.sha }}
+          path: reports/

@@ -1,0 +1,12 @@
+{
+  "description": "Per-package evidence for triage rules T2/T4/T5. production_use and input_path are true, false or null (unknown). Fill in 'note' with how you checked (grep command, route, config).",
+  "packages": {
+    "guzzlehttp/guzzle":       {"production_use": null, "input_path": null, "note": ""},
+    "guzzlehttp/psr7":         {"production_use": null, "input_path": null, "note": ""},
+    "laravel/framework":       {"production_use": null, "input_path": null, "note": ""},
+    "league/commonmark":       {"production_use": null, "input_path": null, "note": ""},
+    "league/flysystem":        {"production_use": null, "input_path": null, "note": ""},
+    "symfony/http-foundation": {"production_use": null, "input_path": null, "note": ""},
+    "symfony/yaml":            {"production_use": null, "input_path": null, "note": ""}
+  }
+}

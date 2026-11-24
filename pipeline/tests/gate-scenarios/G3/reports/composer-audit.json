@@ -1,0 +1,16 @@
+{
+  "advisories": {
+    "laravel/framework": [
+      {
+        "advisoryId": "PKSA-g3",
+        "packageName": "laravel/framework",
+        "affectedVersions": "<12.68.0",
+        "title": "Test advisory PKSA-g3",
+        "cve": "CVE-2026-114509",
+        "link": "",
+        "sources": [],
+        "severity": "critical"
+      }
+    ]
+  }
+}

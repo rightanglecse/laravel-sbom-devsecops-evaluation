@@ -1,0 +1,15 @@
+{
+  "description": "Gate policy for configuration F. Fixed before the controlled runs (see PREREGISTRATION.md).",
+  "mandatory_reports": [
+    {"name": "composer-audit", "file": "composer-audit.json", "status": "composer-audit"},
+    {"name": "sbom",           "file": "cyclonedx-sbom.json", "status": "sbom"},
+    {"name": "sbom-check",     "file": "sbom-check.json",     "status": "sbom-check"},
+    {"name": "osv-scanner",    "file": "osv.json",            "status": "osv-scanner"},
+    {"name": "semgrep",        "file": "semgrep.sarif",       "status": "semgrep"},
+    {"name": "psalm",          "file": "psalm.sarif",         "status": "psalm"},
+    {"name": "gitleaks",       "file": "gitleaks.sarif",      "status": "gitleaks"}
+  ],
+  "block_severities": ["high", "critical"],
+  "sast_block_levels": ["error"],
+  "sast_review_levels": ["warning"]
+}

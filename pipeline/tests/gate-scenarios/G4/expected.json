@@ -1,0 +1,6 @@
+{
+  "id": "G4",
+  "description": "High-confidence SQL injection finding in production code",
+  "expected_decision": "block",
+  "expected_exit": 1
+}

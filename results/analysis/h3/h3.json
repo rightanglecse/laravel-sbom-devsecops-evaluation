@@ -1,0 +1,265 @@
+{
+  "summary": {
+    "B0": {
+      "TP": 5,
+      "FN": 10,
+      "FP": 0,
+      "FP_unreviewed": 0,
+      "true_issues_outside_benchmark": 0,
+      "recall": 0.3333,
+      "recall_ci95": [
+        0.1182,
+        0.6162
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.4782,
+        1.0
+      ],
+      "f1": 0.5,
+      "detected_by": {
+        "S01": [],
+        "S02": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S03": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S04": [],
+        "S05": [],
+        "S06": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S07": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S08": [
+          "phpstan:property.notFound"
+        ],
+        "S09": [],
+        "S10": [],
+        "S11": [],
+        "S12": [],
+        "S13": [],
+        "S14": [],
+        "S15": []
+      }
+    },
+    "B1": {
+      "TP": 7,
+      "FN": 8,
+      "FP": 0,
+      "FP_unreviewed": 0,
+      "true_issues_outside_benchmark": 0,
+      "recall": 0.4667,
+      "recall_ci95": [
+        0.2127,
+        0.7341
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.5904,
+        1.0
+      ],
+      "f1": 0.6364,
+      "detected_by": {
+        "S01": [],
+        "S02": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S03": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S04": [],
+        "S05": [],
+        "S06": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S07": [
+          "phpstan:staticMethod.notFound"
+        ],
+        "S08": [
+          "phpstan:property.notFound"
+        ],
+        "S09": [],
+        "S10": [],
+        "S11": [
+          "gitleaks:generic-api-key",
+          "gitleaks:twilio-api-key"
+        ],
+        "S12": [
+          "gitleaks:aws-access-token"
+        ],
+        "S13": [],
+        "S14": [],
+        "S15": []
+      }
+    },
+    "F": {
+      "TP": 15,
+      "FN": 0,
+      "FP": 31,
+      "FP_unreviewed": 31,
+      "true_issues_outside_benchmark": 0,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.782,
+        1.0
+      ],
+      "precision": 0.3261,
+      "precision_ci95": [
+        0.1953,
+        0.4802
+      ],
+      "f1": 0.4918,
+      "detected_by": {
+        "S01": [
+          "psalm:244",
+          "semgrep:laravel-raw-sql-concatenation",
+          "semgrep:laravel-request-to-dangerous-sink"
+        ],
+        "S02": [
+          "phpstan:staticMethod.notFound",
+          "psalm:244",
+          "semgrep:laravel-raw-sql-concatenation",
+          "semgrep:laravel-request-to-dangerous-sink"
+        ],
+        "S03": [
+          "phpstan:staticMethod.notFound",
+          "psalm:244",
+          "semgrep:laravel-request-to-dangerous-sink"
+        ],
+        "S04": [
+          "semgrep:laravel-blade-unescaped-output",
+          "semgrep:laravel-markdown-raw-html"
+        ],
+        "S05": [
+          "semgrep:laravel-blade-unescaped-output",
+          "semgrep:laravel-markdown-raw-html"
+        ],
+        "S06": [
+          "phpstan:staticMethod.notFound",
+          "semgrep:laravel-request-to-dangerous-sink"
+        ],
+        "S07": [
+          "phpstan:staticMethod.notFound",
+          "semgrep:laravel-mass-assignment-request-all",
+          "semgrep:laravel-model-guarded-empty"
+        ],
+        "S08": [
+          "phpstan:property.notFound",
+          "semgrep:laravel-mass-assignment-request-all"
+        ],
+        "S09": [
+          "semgrep:laravel-missing-authorization"
+        ],
+        "S10": [
+          "semgrep:laravel-missing-authorization"
+        ],
+        "S11": [
+          "gitleaks:generic-api-key",
+          "gitleaks:twilio-api-key"
+        ],
+        "S12": [
+          "gitleaks:aws-access-token"
+        ],
+        "S13": [
+          "semgrep:laravel-csrf-exclusion"
+        ],
+        "S14": [
+          "psalm:245",
+          "semgrep:laravel-debug-flag-enabled-in-config",
+          "semgrep:laravel-exception-details-in-response"
+        ],
+        "S15": [
+          "semgrep:laravel-request-to-dangerous-sink"
+        ]
+      }
+    }
+  },
+  "mcnemar": {
+    "F_vs_B1": {
+      "only_first": 8,
+      "only_second": 0,
+      "p_two_sided": 0.007812,
+      "p_one_sided": 0.003906
+    },
+    "B1_vs_B0": {
+      "only_first": 2,
+      "only_second": 0,
+      "p_two_sided": 0.5,
+      "p_one_sided": 0.25
+    },
+    "F_vs_B0": {
+      "only_first": 10,
+      "only_second": 0,
+      "p_two_sided": 0.001953,
+      "p_one_sided": 0.000977
+    }
+  },
+  "per_class": {
+    "SQL injection": {
+      "seeds": 3,
+      "B0": 2,
+      "B1": 2,
+      "F": 3
+    },
+    "Cross-site scripting": {
+      "seeds": 3,
+      "B0": 1,
+      "B1": 1,
+      "F": 3
+    },
+    "Mass assignment": {
+      "seeds": 2,
+      "B0": 2,
+      "B1": 2,
+      "F": 2
+    },
+    "Broken access control": {
+      "seeds": 2,
+      "B0": 0,
+      "B1": 0,
+      "F": 2
+    },
+    "Hard-coded secret": {
+      "seeds": 2,
+      "B0": 0,
+      "B1": 2,
+      "F": 2
+    },
+    "Insecure configuration (CSRF)": {
+      "seeds": 1,
+      "B0": 0,
+      "B1": 0,
+      "F": 1
+    },
+    "Information exposure (debug)": {
+      "seeds": 1,
+      "B0": 0,
+      "B1": 0,
+      "F": 1
+    },
+    "Path traversal": {
+      "seeds": 1,
+      "B0": 0,
+      "B1": 0,
+      "F": 1
+    }
+  },
+  "verdict": {
+    "checks": {
+      "recall_F >= 0.60": true,
+      "precision_F >= 0.70": false,
+      "recall F > B1 (McNemar p < 0.05)": true,
+      "recall B1 > B0 (McNemar p < 0.05)": false
+    },
+    "H3": "not supported",
+    "note": "FP verdicts missing for some candidates"
+  },
+  "thresholds": {
+    "recall_F": 0.6,
+    "precision_F": 0.7,
+    "alpha": 0.05
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "id": "G7",
+  "description": "SBOM report missing",
+  "expected_decision": "incomplete",
+  "expected_exit": 3
+}

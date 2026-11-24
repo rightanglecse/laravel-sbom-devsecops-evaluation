@@ -1,0 +1,6 @@
+{
+  "id": "G3",
+  "description": "Direct dependency with a critical advisory and a fixed version",
+  "expected_decision": "block",
+  "expected_exit": 1
+}

@@ -1,0 +1,92 @@
+name: B1 conventional security baseline
+run-name: "B1 ${{ inputs.cold && 'cold' || 'warm' }} ${{ github.ref_name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      cold:
+        description: Cold run (no Composer cache)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  PHP_VERSION: '8.2'
+  PHPSTAN_LEVEL: '5'
+  SEMGREP_VERSION: '1.95.0'
+  GITLEAKS_VERSION: '8.21.2'
+
+jobs:
+  b1:
+    name: B1 - B0 plus report-only security tools
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Composer download cache (warm runs only)
+        if: ${{ !inputs.cold }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - name: Install locked dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Prepare application
+        run: |
+          cp -n .env.example .env
+          php artisan key:generate --force
+          mkdir -p reports/versions
+          php -r 'echo PHP_VERSION;' > reports/versions/php.txt
+          composer --version --no-ansi > reports/versions/composer.txt
+          vendor/bin/phpstan --version --no-ansi > reports/versions/phpstan.txt || true
+
+      - name: PHPUnit (application tests)
+        run: php artisan test --exclude-group=benchmark --log-junit reports/phpunit.xml
+
+      - name: PHPStan (report only)
+        run: bash tools/run_step.sh phpstan 0,1 "vendor/bin/phpstan analyse app routes config --level=$PHPSTAN_LEVEL --error-format=json --no-progress --memory-limit=2G > reports/phpstan.json"
+
+      - name: Composer audit (report only)
+        run: bash tools/run_step.sh composer-audit 0,1,2,3 "composer audit --locked --format=json > reports/composer-audit.json"
+
+      - name: Install Gitleaks and Semgrep
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz -C "$HOME/bin" gitleaks
+          python3 -m pip install --quiet --user --break-system-packages "semgrep==${SEMGREP_VERSION}"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Gitleaks (report only)
+        run: |
+          gitleaks version > reports/versions/gitleaks.txt
+          bash tools/run_step.sh gitleaks 0,2 "gitleaks dir . --config .gitleaks.toml --report-format sarif --report-path reports/gitleaks.sarif --exit-code 2 --redact --no-banner"
+
+      - name: Semgrep p/php (report only)
+        run: |
+          semgrep --version > reports/versions/semgrep.txt
+          bash tools/run_step.sh semgrep 0,1 "semgrep scan --config p/php --sarif --output reports/semgrep.sarif --metrics=off --disable-version-check --timeout 60"
+
+      - name: Normalise findings (for analysis only; B1 makes no decision)
+        if: always()
+        run: python3 tools/normalise.py --reports reports --out reports/findings.json
+
+      - name: Run manifest
+        if: always()
+        run: python3 tools/run_manifest.py B1 ${{ inputs.cold && 'cold' || 'warm' }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-B1-${{ github.sha }}-${{ github.run_id }}
+          path: reports/

@@ -1,0 +1,4 @@
+{
+  "description": "Approved exceptions. Each needs an owner, a reason and an expiry date (YYYY-MM-DD).",
+  "exceptions": []
+}

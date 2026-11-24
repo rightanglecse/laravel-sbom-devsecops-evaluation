@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/phpunit.xml" tests="15" assertions="30" errors="0" failures="0" skipped="0" time="0.366687">
+    <testsuite name="Feature" tests="15" assertions="30" errors="0" failures="0" skipped="0" time="0.366687">
+      <testsuite name="Tests\Feature\Benchmark\S01Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S01Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.164811">
+        <testcase name="test_quote_payload_returns_other_users_patients" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S01Test.php" line="10" class="Tests\Feature\Benchmark\S01Test" classname="Tests.Feature.Benchmark.S01Test" assertions="2" time="0.164811"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S02Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S02Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.021992">
+        <testcase name="test_quote_payload_in_status_filter_returns_other_users_invoices" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S02Test.php" line="10" class="Tests\Feature\Benchmark\S02Test" classname="Tests.Feature.Benchmark.S02Test" assertions="2" time="0.021992"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S03Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S03Test.php" tests="1" assertions="3" errors="0" failures="0" skipped="0" time="0.018744">
+        <testcase name="test_sort_parameter_leaks_data_through_result_order" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S03Test.php" line="10" class="Tests\Feature\Benchmark\S03Test" classname="Tests.Feature.Benchmark.S03Test" assertions="3" time="0.018744"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S04Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S04Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.038752">
+        <testcase name="test_note_body_is_rendered_without_escaping" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S04Test.php" line="10" class="Tests\Feature\Benchmark\S04Test" classname="Tests.Feature.Benchmark.S04Test" assertions="2" time="0.038752"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S05Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S05Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.013191">
+        <testcase name="test_markdown_summary_passes_raw_html" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S05Test.php" line="10" class="Tests\Feature\Benchmark\S05Test" classname="Tests.Feature.Benchmark.S05Test" assertions="2" time="0.013191"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S06Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S06Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.009921">
+        <testcase name="test_lookup_reflects_query_without_escaping" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S06Test.php" line="10" class="Tests\Feature\Benchmark\S06Test" classname="Tests.Feature.Benchmark.S06Test" assertions="2" time="0.009921"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S07Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S07Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.014620">
+        <testcase name="test_profile_update_can_set_admin_flag" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S07Test.php" line="11" class="Tests\Feature\Benchmark\S07Test" classname="Tests.Feature.Benchmark.S07Test" assertions="2" time="0.014620"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S08Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S08Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.010802">
+        <testcase name="test_new_invoice_can_be_created_as_paid" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S08Test.php" line="11" class="Tests\Feature\Benchmark\S08Test" classname="Tests.Feature.Benchmark.S08Test" assertions="2" time="0.010802"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S09Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S09Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.012297">
+        <testcase name="test_user_can_read_another_users_invoice" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S09Test.php" line="10" class="Tests\Feature\Benchmark\S09Test" classname="Tests.Feature.Benchmark.S09Test" assertions="2" time="0.012297"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S10Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S10Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.015607">
+        <testcase name="test_user_can_update_another_users_patient" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S10Test.php" line="11" class="Tests\Feature\Benchmark\S10Test" classname="Tests.Feature.Benchmark.S10Test" assertions="2" time="0.015607"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S11Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S11Test.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.006737">
+        <testcase name="test_sms_credentials_exist_without_any_environment_configuration" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S11Test.php" line="11" class="Tests\Feature\Benchmark\S11Test" classname="Tests.Feature.Benchmark.S11Test" assertions="1" time="0.006737"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S12Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S12Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.006409">
+        <testcase name="test_storage_key_exists_without_any_environment_configuration" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S12Test.php" line="10" class="Tests\Feature\Benchmark\S12Test" classname="Tests.Feature.Benchmark.S12Test" assertions="2" time="0.006409"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S13Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S13Test.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.010384">
+        <testcase name="test_state_changing_post_is_accepted_without_csrf_token" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S13Test.php" line="10" class="Tests\Feature\Benchmark\S13Test" classname="Tests.Feature.Benchmark.S13Test" assertions="1" time="0.010384"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S14Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S14Test.php" tests="1" assertions="3" errors="0" failures="0" skipped="0" time="0.010881">
+        <testcase name="test_report_error_exposes_exception_and_stack_trace" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S14Test.php" line="10" class="Tests\Feature\Benchmark\S14Test" classname="Tests.Feature.Benchmark.S14Test" assertions="3" time="0.010881"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S15Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S15Test.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.011537">
+        <testcase name="test_download_reads_file_outside_reports_folder" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S15Test.php" line="26" class="Tests\Feature\Benchmark\S15Test" classname="Tests.Feature.Benchmark.S15Test" assertions="2" time="0.011537"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

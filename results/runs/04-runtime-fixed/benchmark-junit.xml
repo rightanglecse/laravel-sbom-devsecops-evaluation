@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/phpunit.xml" tests="15" assertions="25" errors="0" failures="15" skipped="0" time="0.401089">
+    <testsuite name="Feature" tests="15" assertions="25" errors="0" failures="15" skipped="0" time="0.401089">
+      <testsuite name="Tests\Feature\Benchmark\S01Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S01Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.186781">
+        <testcase name="test_quote_payload_returns_other_users_patients" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S01Test.php" line="10" class="Tests\Feature\Benchmark\S01Test" classname="Tests.Feature.Benchmark.S01Test" assertions="2" time="0.186781">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S01Test::test_quote_payload_returns_other_users_patients
+Failed asserting that an array contains 'Bob Patient'.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S01Test.php:20</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S02Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S02Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.014369">
+        <testcase name="test_quote_payload_in_status_filter_returns_other_users_invoices" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S02Test.php" line="10" class="Tests\Feature\Benchmark\S02Test" classname="Tests.Feature.Benchmark.S02Test" assertions="2" time="0.014369">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S02Test::test_quote_payload_in_status_filter_returns_other_users_invoices
+Failed asserting that an array contains 'Bob Invoice'.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S02Test.php:20</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S03Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S03Test.php" tests="1" assertions="3" errors="0" failures="1" skipped="0" time="0.012975">
+        <testcase name="test_sort_parameter_leaks_data_through_result_order" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S03Test.php" line="10" class="Tests\Feature\Benchmark\S03Test" classname="Tests.Feature.Benchmark.S03Test" assertions="3" time="0.012975">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S03Test::test_sort_parameter_leaks_data_through_result_order
+Result order should reveal whether the injected condition is true.
+Failed asserting that two arrays are not identical.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S03Test.php:23</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S04Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S04Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.026367">
+        <testcase name="test_note_body_is_rendered_without_escaping" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S04Test.php" line="10" class="Tests\Feature\Benchmark\S04Test" classname="Tests.Feature.Benchmark.S04Test" assertions="2" time="0.026367">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S04Test::test_note_body_is_rendered_without_escaping
+Failed asserting that '&lt;!DOCTYPE html&gt;\n
+&lt;html lang="en"&gt;\n
+&lt;head&gt;\n
+    &lt;meta charset="utf-8"&gt;\n
+    &lt;title&gt;Clinical note&lt;/title&gt;\n
+&lt;/head&gt;\n
+&lt;body&gt;\n
+    &lt;h1&gt;Clinical note #1&lt;/h1&gt;\n
+    &lt;section class="note-body"&gt;&amp;lt;script&amp;gt;alert(&amp;quot;s04&amp;quot;)&amp;lt;/script&amp;gt;&lt;/section&gt;\n
+    &lt;section class="note-summary"&gt;&lt;/section&gt;\n
+&lt;/body&gt;\n
+&lt;/html&gt;\n
+' [ASCII](length: 299) contains "&lt;script&gt;alert("s04")&lt;/script&gt;" [ASCII](length: 29).
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:710
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S04Test.php:18</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S05Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S05Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.014117">
+        <testcase name="test_markdown_summary_passes_raw_html" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S05Test.php" line="10" class="Tests\Feature\Benchmark\S05Test" classname="Tests.Feature.Benchmark.S05Test" assertions="2" time="0.014117">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S05Test::test_markdown_summary_passes_raw_html
+Failed asserting that '&lt;!DOCTYPE html&gt;\n
+&lt;html lang="en"&gt;\n
+&lt;head&gt;\n
+    &lt;meta charset="utf-8"&gt;\n
+    &lt;title&gt;Clinical note&lt;/title&gt;\n
+&lt;/head&gt;\n
+&lt;body&gt;\n
+    &lt;h1&gt;Clinical note #1&lt;/h1&gt;\n
+    &lt;section class="note-body"&gt;plain body&lt;/section&gt;\n
+    &lt;section class="note-summary"&gt;&amp;lt;img src=x onerror=alert(5)&amp;gt;\n
+&lt;/section&gt;\n
+&lt;/body&gt;\n
+&lt;/html&gt;\n
+' [ASCII](length: 293) contains "&lt;img src=x onerror=alert(5)&gt;" [ASCII](length: 28).
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:710
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S05Test.php:18</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S06Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S06Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.010745">
+        <testcase name="test_lookup_reflects_query_without_escaping" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S06Test.php" line="10" class="Tests\Feature\Benchmark\S06Test" classname="Tests.Feature.Benchmark.S06Test" assertions="2" time="0.010745">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S06Test::test_lookup_reflects_query_without_escaping
+Failed asserting that '&lt;p&gt;No patient found for: &amp;lt;script&amp;gt;alert(6)&amp;lt;/script&amp;gt;&lt;/p&gt;' [ASCII](length: 66) contains "&lt;script&gt;alert(6)&lt;/script&gt;" [ASCII](length: 25).
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:710
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S06Test.php:17</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S07Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S07Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.015949">
+        <testcase name="test_profile_update_can_set_admin_flag" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S07Test.php" line="11" class="Tests\Feature\Benchmark\S07Test" classname="Tests.Feature.Benchmark.S07Test" assertions="2" time="0.015949">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S07Test::test_profile_update_can_set_admin_flag
+Failed asserting that false is true.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S07Test.php:22</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S08Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S08Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.012661">
+        <testcase name="test_new_invoice_can_be_created_as_paid" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S08Test.php" line="11" class="Tests\Feature\Benchmark\S08Test" classname="Tests.Feature.Benchmark.S08Test" assertions="2" time="0.012661">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S08Test::test_new_invoice_can_be_created_as_paid
+Failed asserting that two strings are identical.
+--- Expected
++++ Actual
+@@ @@
+-'paid'
++'unpaid'
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S08Test.php:21</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S09Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S09Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.014813">
+        <testcase name="test_user_can_read_another_users_invoice" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S09Test.php" line="10" class="Tests\Feature\Benchmark\S09Test" classname="Tests.Feature.Benchmark.S09Test" assertions="1" time="0.014813">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S09Test::test_user_can_read_another_users_invoice
+Expected response status code [200] but received 403.
+Failed asserting that 403 is identical to 200.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:175
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/Concerns/AssertsStatusCodes.php:16
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S09Test.php:18</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S10Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S10Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.016359">
+        <testcase name="test_user_can_update_another_users_patient" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S10Test.php" line="11" class="Tests\Feature\Benchmark\S10Test" classname="Tests.Feature.Benchmark.S10Test" assertions="1" time="0.016359">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S10Test::test_user_can_update_another_users_patient
+Expected response status code [200] but received 403.
+Failed asserting that 403 is identical to 200.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:175
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/Concerns/AssertsStatusCodes.php:16
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S10Test.php:19</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S11Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S11Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.009822">
+        <testcase name="test_sms_credentials_exist_without_any_environment_configuration" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S11Test.php" line="11" class="Tests\Feature\Benchmark\S11Test" classname="Tests.Feature.Benchmark.S11Test" assertions="1" time="0.009822">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S11Test::test_sms_credentials_exist_without_any_environment_configuration
+Failed asserting that false is true.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S11Test.php:15</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S12Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S12Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.009939">
+        <testcase name="test_storage_key_exists_without_any_environment_configuration" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S12Test.php" line="10" class="Tests\Feature\Benchmark\S12Test" classname="Tests.Feature.Benchmark.S12Test" assertions="1" time="0.009939">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S12Test::test_storage_key_exists_without_any_environment_configuration
+Failed asserting that a NULL is not empty.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S12Test.php:12</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S13Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S13Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.016556">
+        <testcase name="test_state_changing_post_is_accepted_without_csrf_token" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S13Test.php" line="10" class="Tests\Feature\Benchmark\S13Test" classname="Tests.Feature.Benchmark.S13Test" assertions="1" time="0.016556">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S13Test::test_state_changing_post_is_accepted_without_csrf_token
+Expected response status code [201] but received 419.
+Failed asserting that 419 is identical to 201.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:175
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S13Test.php:20</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S14Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S14Test.php" tests="1" assertions="2" errors="0" failures="1" skipped="0" time="0.022719">
+        <testcase name="test_report_error_exposes_exception_and_stack_trace" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S14Test.php" line="10" class="Tests\Feature\Benchmark\S14Test" classname="Tests.Feature.Benchmark.S14Test" assertions="2" time="0.022719">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S14Test::test_report_error_exposes_exception_and_stack_trace
+Failed asserting that '{"message":"The report could not be generated."}' [ASCII](length: 48) contains "Division by zero" [ASCII](length: 16).
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S14Test.php:17</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\Benchmark\S15Test" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S15Test.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.016915">
+        <testcase name="test_download_reads_file_outside_reports_folder" file="/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S15Test.php" line="26" class="Tests\Feature\Benchmark\S15Test" classname="Tests.Feature.Benchmark.S15Test" assertions="1" time="0.016915">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Benchmark\S15Test::test_download_reads_file_outside_reports_folder
+Expected response status code [200] but received 404.
+Failed asserting that 404 is identical to 200.
+
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponseAssert.php:45
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:175
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/vendor/laravel/framework/src/Illuminate/Testing/Concerns/AssertsStatusCodes.php:16
+/home/runner/work/onera-healthcare-billing/onera-healthcare-billing/tests/Feature/Benchmark/S15Test.php:32</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

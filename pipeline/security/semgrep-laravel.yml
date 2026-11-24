@@ -1,0 +1,162 @@
+# Custom Semgrep rules for Laravel (configuration F only).
+# The rules describe general Laravel weakness patterns taken from the Laravel
+# documentation (raw expressions, Blade escaping, mass assignment,
+# authorization, CSRF, error handling). They do not refer to benchmark files.
+rules:
+  - id: laravel-raw-sql-concatenation
+    languages: [php]
+    severity: ERROR
+    message: Raw SQL is built by string concatenation. Use parameter bindings instead.
+    metadata: {cwe: "CWE-89", category: security, confidence: HIGH}
+    pattern-either:
+      - patterns:
+          - pattern: DB::$M($A . $B, ...)
+          - metavariable-regex:
+              metavariable: $M
+              regex: ^(select|selectOne|statement|unprepared|insert|update|delete|raw|scalar)$
+      - patterns:
+          - pattern: $Q->$M($A . $B, ...)
+          - metavariable-regex:
+              metavariable: $M
+              regex: ^(whereRaw|orWhereRaw|havingRaw|orHavingRaw|orderByRaw|selectRaw|groupByRaw|fromRaw)$
+
+  - id: laravel-request-to-dangerous-sink
+    mode: taint
+    languages: [php]
+    severity: ERROR
+    message: Request input reaches a raw SQL, file-system or HTML response sink without sanitisation.
+    metadata: {cwe: "CWE-89 / CWE-22 / CWE-79", category: security, confidence: HIGH}
+    pattern-sources:
+      - pattern: $REQ->input(...)
+      - pattern: $REQ->query(...)
+      - pattern: $REQ->get(...)
+      - pattern: $REQ->post(...)
+      - pattern: $REQ->all(...)
+      - pattern: request(...)
+      - pattern: $_GET
+      - pattern: $_POST
+      - pattern: $_REQUEST
+    pattern-sinks:
+      - patterns:
+          - pattern-either:
+              - pattern: DB::$M($SQL, ...)
+              - pattern: $Q->$M($SQL, ...)
+          - metavariable-regex:
+              metavariable: $M
+              regex: ^(select|selectOne|statement|unprepared|scalar|whereRaw|orWhereRaw|havingRaw|orderByRaw|selectRaw|groupByRaw|fromRaw)$
+          - focus-metavariable: $SQL
+      - patterns:
+          - pattern-either:
+              - pattern: file_get_contents($P, ...)
+              - pattern: fopen($P, ...)
+              - pattern: readfile($P, ...)
+              - pattern: file($P, ...)
+              - pattern: unlink($P, ...)
+              - pattern: Storage::$S($P, ...)
+              - pattern: Storage::disk(...)->$S($P, ...)
+          - focus-metavariable: $P
+      - patterns:
+          - pattern: response($BODY, ...)
+          - focus-metavariable: $BODY
+    pattern-sanitizers:
+      - pattern: e(...)
+      - pattern: htmlspecialchars(...)
+      - pattern: basename(...)
+      - pattern: intval(...)
+
+  - id: laravel-blade-unescaped-output
+    languages: [generic]
+    severity: WARNING
+    message: Unescaped Blade output. Check that the value can never contain user input.
+    metadata: {cwe: "CWE-79", category: security, confidence: MEDIUM}
+    paths:
+      include: ["*.blade.php"]
+    pattern-regex: '\{!!(?!\s*(csrf_field|method_field)\b).+?!!\}'
+
+  - id: laravel-markdown-raw-html
+    languages: [generic]
+    severity: ERROR
+    message: Str::markdown() is called without html_input set to escape or strip, so raw HTML is passed through.
+    metadata: {cwe: "CWE-79", category: security, confidence: HIGH}
+    paths:
+      include: ["*.php"]
+    pattern-regex: 'Str::(inline)?[mM]arkdown\((?![^)]*html_input)[^)]*\)'
+
+  - id: laravel-model-guarded-empty
+    languages: [php]
+    severity: ERROR
+    message: Model sets $guarded to an empty array, so every column can be mass assigned.
+    metadata: {cwe: "CWE-915", category: security, confidence: HIGH}
+    pattern-regex: 'protected\s+\$guarded\s*=\s*(\[\s*\]|array\(\s*\))\s*;'
+
+  - id: laravel-mass-assignment-request-all
+    languages: [php]
+    severity: WARNING
+    message: Unfiltered request data is passed to a model. Pass validated data instead.
+    metadata: {cwe: "CWE-915", category: security, confidence: MEDIUM}
+    pattern-either:
+      - pattern: $M::create($REQ->all())
+      - pattern: $M::forceCreate($REQ->all())
+      - pattern: new $M($REQ->all())
+      - pattern: $X->fill($REQ->all())
+      - pattern: $X->update($REQ->all())
+      - pattern: $X->fill($REQ->except(...))
+      - pattern: $X->update($REQ->except(...))
+      - pattern: $M::create($REQ->except(...))
+
+  - id: laravel-missing-authorization
+    languages: [php]
+    severity: WARNING
+    message: Controller action receives a model but performs no authorization check.
+    metadata: {cwe: "CWE-639", category: security, confidence: MEDIUM}
+    paths:
+      include: ["app/Http/Controllers/"]
+    patterns:
+      - pattern: |
+          public function $ACTION(..., $TYPE $MODEL, ...) { ... }
+      - metavariable-regex:
+          metavariable: $ACTION
+          regex: ^(show|edit|update|destroy|download)$
+      - metavariable-regex:
+          metavariable: $TYPE
+          regex: ^(?!.*Request$)[A-Z]\w+$
+      - pattern-not: |
+          public function $ACTION(...) { ... Gate::authorize(...); ... }
+      - pattern-not: |
+          public function $ACTION(...) { ... $this->authorize(...); ... }
+      - pattern-not: |
+          public function $ACTION(...) { ... abort_unless(...); ... }
+      - pattern-not: |
+          public function $ACTION(...) { ... abort_if(...); ... }
+      - pattern-not: |
+          public function $ACTION(...) { ... Gate::denies(...); ... }
+
+  - id: laravel-csrf-exclusion
+    languages: [php]
+    severity: WARNING
+    message: Routes are excluded from CSRF verification.
+    metadata: {cwe: "CWE-352", category: security, confidence: MEDIUM}
+    pattern-either:
+      - pattern: ValidateCsrfToken::except(...)
+      - pattern: VerifyCsrfToken::except(...)
+      - pattern-regex: 'validateCsrfTokens\(\s*except\s*:'
+
+  - id: laravel-exception-details-in-response
+    languages: [php]
+    severity: ERROR
+    message: Exception message or stack trace is returned to the client.
+    metadata: {cwe: "CWE-209", category: security, confidence: HIGH}
+    pattern-either:
+      - pattern: response(<... $E->getTraceAsString() ...>, ...)
+      - pattern: response(<... $E->getMessage() ...>, ...)
+      - pattern: response()->json(<... $E->getTraceAsString() ...>, ...)
+      - pattern: response()->json(<... $E->getMessage() ...>, ...)
+
+  - id: laravel-debug-flag-enabled-in-config
+    languages: [generic]
+    severity: WARNING
+    message: A debug option is hard-coded to true in a committed configuration file.
+    metadata: {cwe: "CWE-489", category: security, confidence: MEDIUM}
+    paths:
+      include: ["config/*.php"]
+    pattern-regex: '[''"]debug\w*[''"]\s*=>\s*true\b'

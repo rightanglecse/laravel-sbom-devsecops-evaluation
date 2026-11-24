@@ -1,0 +1,10 @@
+{
+  "name": "osv-scanner",
+  "ok_codes": [
+    0,
+    1
+  ],
+  "exit_code": 0,
+  "seconds": 0.7,
+  "command": "osv-scanner scan source --sbom reports/bom.cdx.json --format json --output reports/osv.json"
+}

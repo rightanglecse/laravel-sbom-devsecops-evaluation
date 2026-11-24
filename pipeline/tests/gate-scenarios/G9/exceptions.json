@@ -1,0 +1,11 @@
+{
+  "exceptions": [
+    {
+      "tool": "composer-audit",
+      "id": "CVE-2026-114509",
+      "owner": "thesis author",
+      "reason": "upgrade scheduled in release 1.4; TokenGuard not used (session auth only)",
+      "expires": "2099-12-31"
+    }
+  ]
+}

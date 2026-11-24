@@ -1,0 +1,33 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "security.laravel-raw-sql-concatenation",
+          "level": "error",
+          "message": {
+            "text": "security.laravel-raw-sql-concatenation"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Http/Controllers/Clinic/PatientRecordController.php"
+                },
+                "region": {
+                  "startLine": 28
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

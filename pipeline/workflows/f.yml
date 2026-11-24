@@ -1,0 +1,270 @@
+name: F SBOM-enabled DevSecOps framework
+run-name: "F ${{ inputs.cold && 'cold' || 'warm' }} ${{ github.ref_name }}"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      cold:
+        description: Cold run (no Composer cache)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  PHP_VERSION: '8.2'
+  PHPSTAN_LEVEL: '5'
+  SEMGREP_VERSION: '1.95.0'
+  GITLEAKS_VERSION: '8.21.2'
+  OSV_SCANNER_VERSION: '2.0.0'
+  CYCLONEDX_PHP_VERSION: '6.2.0'
+  CYCLONEDX_PY_SPEC: 'cyclonedx-python-lib[json-validation]>=7,<12'
+  PSALM_SPEC: 'vimeo/psalm:^6'
+  PSALM_PLUGIN_SPEC: 'psalm/plugin-laravel:^3'
+
+jobs:
+  deps:
+    name: Dependencies - audit, SBOM, OSV matching
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Composer download cache (warm runs only)
+        if: ${{ !inputs.cold }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - name: Install SBOM generator outside the project
+        run: |
+          composer global config --no-plugins allow-plugins.cyclonedx/cyclonedx-php-composer true
+          composer global require --no-interaction --no-progress "cyclonedx/cyclonedx-php-composer:${CYCLONEDX_PHP_VERSION}"
+          mkdir -p reports/versions
+          composer global show cyclonedx/cyclonedx-php-composer --no-ansi | head -n 4 > reports/versions/cyclonedx-php-composer.txt
+
+      - name: Install locked dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Audit the locked state
+        run: bash tools/run_step.sh composer-audit 0,1,2,3 "composer audit --locked --format=json > reports/composer-audit.json"
+
+      - name: Generate the SBOM from the same state
+        run: bash tools/run_step.sh sbom 0 "composer CycloneDX:make-sbom --spec-version=1.5 --output-format=JSON --output-file=reports/cyclonedx-sbom.json"
+
+      - name: Prove composer.json and composer.lock did not change
+        run: |
+          set +e
+          git diff --exit-code -- composer.json composer.lock
+          echo "LOCK_DIFF=$?" >> "$GITHUB_ENV"
+
+      - name: Check SBOM validity and completeness against composer.lock
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages "${CYCLONEDX_PY_SPEC}"
+          bash tools/run_step.sh sbom-check 0 "python3 tools/sbom_check.py --sbom reports/cyclonedx-sbom.json --lock composer.lock --lock-diff-exit ${LOCK_DIFF} --out reports/sbom-check.json"
+
+      - name: Install OSV-Scanner
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -sSfL -o "$HOME/bin/osv-scanner" "https://github.com/google/osv-scanner/releases/download/v${OSV_SCANNER_VERSION}/osv-scanner_linux_amd64"
+          chmod +x "$HOME/bin/osv-scanner"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Match vulnerabilities using the SBOM as input (OSV-Scanner)
+        run: |
+          osv-scanner --version > reports/versions/osv-scanner.txt
+          cp reports/cyclonedx-sbom.json reports/bom.cdx.json
+          bash tools/run_step.sh osv-scanner 0,1 "osv-scanner scan source --sbom reports/bom.cdx.json --format json --output reports/osv.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f-deps
+          path: reports/
+
+  tests:
+    name: Tests and type checks
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Composer download cache (warm runs only)
+        if: ${{ !inputs.cold }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - name: Install locked dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Prepare application
+        run: |
+          cp -n .env.example .env
+          php artisan key:generate --force
+          mkdir -p reports/versions
+          php -r 'echo PHP_VERSION;' > reports/versions/php.txt
+          composer --version --no-ansi > reports/versions/composer.txt
+          vendor/bin/phpstan --version --no-ansi > reports/versions/phpstan.txt || true
+
+      - name: PHPUnit (application tests)
+        run: php artisan test --exclude-group=benchmark --log-junit reports/phpunit.xml
+
+      - name: PHPStan (type checks; not used by the gate)
+        run: bash tools/run_step.sh phpstan 0,1 "vendor/bin/phpstan analyse app routes config --level=$PHPSTAN_LEVEL --error-format=json --no-progress --memory-limit=2G > reports/phpstan.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f-tests
+          path: reports/
+
+  sast:
+    name: Semgrep (p/php + Laravel rules)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Semgrep CLI
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages "semgrep==${SEMGREP_VERSION}"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Semgrep
+        run: |
+          mkdir -p reports/versions
+          semgrep --version > reports/versions/semgrep.txt
+          bash tools/run_step.sh semgrep 0,1 "semgrep scan --config p/php --config security/semgrep-laravel.yml --sarif --output reports/semgrep.sarif --metrics=off --disable-version-check --timeout 60"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f-sast
+          path: reports/
+
+  taint:
+    name: Psalm taint analysis
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Composer download cache (warm runs only)
+        if: ${{ !inputs.cold }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-psalm-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - name: Install dependencies and Psalm (job-local; the SBOM job is not affected)
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          cp -n .env.example .env
+          php artisan key:generate --force
+          mkdir -p reports/versions
+          set +e
+          composer require --dev --no-interaction --no-progress -W "${PSALM_SPEC}" "${PSALM_PLUGIN_SPEC}"
+          if [ $? -eq 0 ]; then
+            vendor/bin/psalm-plugin enable psalm/plugin-laravel
+            echo "laravel plugin enabled" > reports/versions/psalm-plugin.txt
+          else
+            composer require --dev --no-interaction --no-progress -W "${PSALM_SPEC}"
+            echo "laravel plugin NOT installed (dependency conflict)" > reports/versions/psalm-plugin.txt
+          fi
+          vendor/bin/psalm --version > reports/versions/psalm.txt
+
+      - name: Psalm --taint-analysis
+        run: bash tools/run_step.sh psalm 0,1,2 "vendor/bin/psalm --taint-analysis --no-progress --no-cache --report=reports/psalm.sarif"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f-taint
+          path: reports/
+
+  secrets:
+    name: Gitleaks
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Gitleaks
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz -C "$HOME/bin" gitleaks
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Gitleaks (working tree of this commit)
+        run: |
+          mkdir -p reports/versions
+          gitleaks version > reports/versions/gitleaks.txt
+          bash tools/run_step.sh gitleaks 0,2 "gitleaks dir . --config .gitleaks.toml --report-format sarif --report-path reports/gitleaks.sarif --exit-code 2 --redact --no-banner"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f-secrets
+          path: reports/
+
+  gate:
+    name: Security gate
+    needs: [deps, tests, sast, taint, secrets]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: f-*
+          path: reports
+          merge-multiple: true
+
+      - name: Run manifest
+        run: python3 tools/run_manifest.py F ${{ inputs.cold && 'cold' || 'warm' }}
+
+      - name: Normalise, triage and decide
+        id: gate
+        run: |
+          set +e
+          python3 tools/gate.py --reports reports --out reports/gate-decision.json | tee reports/gate-output.txt
+          code=${PIPESTATUS[0]}
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          python3 tools/normalise.py --reports reports --out reports/findings.json > /dev/null
+          {
+            echo "## Security gate"
+            echo '```'
+            cat reports/gate-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-F-${{ github.sha }}-${{ github.run_id }}
+          path: reports/
+
+      - name: Enforce the gate decision (0 pass, 1 block, 2 review, 3 incomplete)
+        run: exit ${{ steps.gate.outputs.code }}

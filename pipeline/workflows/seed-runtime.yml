@@ -1,0 +1,34 @@
+name: Seed runtime tests
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+
+      - name: Install and prepare
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          cp -n .env.example .env
+          php artisan key:generate --force
+          mkdir -p reports
+
+      - name: Runtime tests for every seed (attack must succeed only on the vulnerable branch)
+        run: php artisan test --group=benchmark --log-junit reports/benchmark-junit.xml || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: runtime-${{ github.ref_name }}-${{ github.sha }}
+          path: reports/

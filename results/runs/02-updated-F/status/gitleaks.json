@@ -1,0 +1,10 @@
+{
+  "name": "gitleaks",
+  "ok_codes": [
+    0,
+    2
+  ],
+  "exit_code": 0,
+  "seconds": 0.99,
+  "command": "gitleaks dir . --config .gitleaks.toml --report-format sarif --report-path reports/gitleaks.sarif --exit-code 2 --redact --no-banner"
+}

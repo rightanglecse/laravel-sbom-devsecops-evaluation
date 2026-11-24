@@ -1,0 +1,180 @@
+config,cache,job,step,n,median_s,q1_s,q3_s
+B0,cold,B0 - tests and type checks,Complete job,3,0.0,0.0,0.0
+B0,cold,B0 - tests and type checks,Composer download cache (warm runs only),3,0.0,0.0,0.0
+B0,cold,B0 - tests and type checks,Install locked dependencies,3,8.0,8.0,12.0
+B0,cold,B0 - tests and type checks,PHPStan (report only),3,6.0,5.5,6.0
+B0,cold,B0 - tests and type checks,PHPUnit (application tests),3,0.0,0.0,0.5
+B0,cold,B0 - tests and type checks,Post Run actions/checkout@v4,3,1.0,0.5,1.0
+B0,cold,B0 - tests and type checks,Prepare application,3,1.0,1.0,1.5
+B0,cold,B0 - tests and type checks,Run actions/checkout@v4,3,2.0,1.5,2.5
+B0,cold,B0 - tests and type checks,Run actions/upload-artifact@v4,3,1.0,1.0,1.5
+B0,cold,B0 - tests and type checks,Run manifest,3,0.0,0.0,0.0
+B0,cold,B0 - tests and type checks,Run shivammathur/setup-php@v2,3,3.0,3.0,3.5
+B0,cold,B0 - tests and type checks,Set up job,3,1.0,1.0,1.5
+B0,warm,B0 - tests and type checks,Complete job,10,0.0,0.0,0.0
+B0,warm,B0 - tests and type checks,Composer download cache (warm runs only),10,1.0,1.0,1.0
+B0,warm,B0 - tests and type checks,Install locked dependencies,10,5.0,4.25,6.5
+B0,warm,B0 - tests and type checks,PHPStan (report only),10,5.5,5.0,6.75
+B0,warm,B0 - tests and type checks,PHPUnit (application tests),10,0.5,0.0,1.0
+B0,warm,B0 - tests and type checks,Post Composer download cache (warm runs only),10,0.0,0.0,1.0
+B0,warm,B0 - tests and type checks,Post Run actions/checkout@v4,10,0.5,0.0,1.0
+B0,warm,B0 - tests and type checks,Prepare application,10,1.0,1.0,1.0
+B0,warm,B0 - tests and type checks,Run actions/checkout@v4,10,1.0,1.0,2.0
+B0,warm,B0 - tests and type checks,Run actions/upload-artifact@v4,10,1.0,1.0,1.0
+B0,warm,B0 - tests and type checks,Run manifest,10,0.0,0.0,0.0
+B0,warm,B0 - tests and type checks,Run shivammathur/setup-php@v2,10,3.0,2.25,3.0
+B0,warm,B0 - tests and type checks,Set up job,10,1.5,1.0,2.0
+B1,cold,B1 - B0 plus report-only security tools,Complete job,3,0.0,0.0,0.0
+B1,cold,B1 - B0 plus report-only security tools,Composer audit (report only),3,1.0,0.5,1.0
+B1,cold,B1 - B0 plus report-only security tools,Composer download cache (warm runs only),3,0.0,0.0,0.0
+B1,cold,B1 - B0 plus report-only security tools,Gitleaks (report only),3,1.0,1.0,1.5
+B1,cold,B1 - B0 plus report-only security tools,Install Gitleaks and Semgrep,3,10.0,9.5,10.5
+B1,cold,B1 - B0 plus report-only security tools,Install locked dependencies,3,7.0,6.0,7.5
+B1,cold,B1 - B0 plus report-only security tools,Normalise findings (for analysis only; B1 makes no decision),3,0.0,0.0,0.5
+B1,cold,B1 - B0 plus report-only security tools,PHPStan (report only),3,6.0,4.5,6.5
+B1,cold,B1 - B0 plus report-only security tools,PHPUnit (application tests),3,1.0,1.0,1.0
+B1,cold,B1 - B0 plus report-only security tools,Post Run actions/checkout@v4,3,0.0,0.0,0.5
+B1,cold,B1 - B0 plus report-only security tools,Prepare application,3,1.0,1.0,1.0
+B1,cold,B1 - B0 plus report-only security tools,Run actions/checkout@v4,3,2.0,1.5,3.5
+B1,cold,B1 - B0 plus report-only security tools,Run actions/upload-artifact@v4,3,1.0,1.0,1.0
+B1,cold,B1 - B0 plus report-only security tools,Run manifest,3,0.0,0.0,0.0
+B1,cold,B1 - B0 plus report-only security tools,Run shivammathur/setup-php@v2,3,3.0,2.5,3.5
+B1,cold,B1 - B0 plus report-only security tools,Semgrep p/php (report only),3,2.0,2.0,2.0
+B1,cold,B1 - B0 plus report-only security tools,Set up job,3,2.0,1.5,2.0
+B1,warm,B1 - B0 plus report-only security tools,Complete job,10,0.0,0.0,0.0
+B1,warm,B1 - B0 plus report-only security tools,Composer audit (report only),10,1.0,1.0,1.0
+B1,warm,B1 - B0 plus report-only security tools,Composer download cache (warm runs only),10,2.0,1.0,2.0
+B1,warm,B1 - B0 plus report-only security tools,Gitleaks (report only),10,1.0,1.0,1.75
+B1,warm,B1 - B0 plus report-only security tools,Install Gitleaks and Semgrep,10,11.5,10.25,12.0
+B1,warm,B1 - B0 plus report-only security tools,Install locked dependencies,10,4.5,4.0,5.0
+B1,warm,B1 - B0 plus report-only security tools,Normalise findings (for analysis only; B1 makes no decision),10,0.0,0.0,0.0
+B1,warm,B1 - B0 plus report-only security tools,PHPStan (report only),10,5.5,4.25,6.0
+B1,warm,B1 - B0 plus report-only security tools,PHPUnit (application tests),10,0.0,0.0,1.0
+B1,warm,B1 - B0 plus report-only security tools,Post Composer download cache (warm runs only),10,0.0,0.0,0.0
+B1,warm,B1 - B0 plus report-only security tools,Post Run actions/checkout@v4,10,0.0,0.0,0.75
+B1,warm,B1 - B0 plus report-only security tools,Prepare application,10,1.0,1.0,1.75
+B1,warm,B1 - B0 plus report-only security tools,Run actions/checkout@v4,10,2.0,1.0,2.0
+B1,warm,B1 - B0 plus report-only security tools,Run actions/upload-artifact@v4,10,1.0,1.0,2.0
+B1,warm,B1 - B0 plus report-only security tools,Run manifest,10,0.0,0.0,0.0
+B1,warm,B1 - B0 plus report-only security tools,Run shivammathur/setup-php@v2,10,3.0,3.0,3.0
+B1,warm,B1 - B0 plus report-only security tools,Semgrep p/php (report only),10,2.0,2.0,3.0
+B1,warm,B1 - B0 plus report-only security tools,Set up job,10,1.0,1.0,2.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Audit the locked state,3,1.0,1.0,1.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Check SBOM validity and completeness against composer.lock,3,16.0,14.0,16.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Complete job,3,0.0,0.0,0.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Composer download cache (warm runs only),3,0.0,0.0,0.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Generate the SBOM from the same state,3,0.0,0.0,0.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Install OSV-Scanner,3,0.0,0.0,0.5
+F,cold,"Dependencies - audit, SBOM, OSV matching",Install SBOM generator outside the project,3,3.0,3.0,3.5
+F,cold,"Dependencies - audit, SBOM, OSV matching",Install locked dependencies,3,8.0,7.0,10.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Match vulnerabilities using the SBOM as input (OSV-Scanner),3,1.0,0.5,1.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Post Run actions/checkout@v4,3,0.0,0.0,0.5
+F,cold,"Dependencies - audit, SBOM, OSV matching",Prove composer.json and composer.lock did not change,3,0.0,0.0,0.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Run actions/checkout@v4,3,2.0,1.5,3.5
+F,cold,"Dependencies - audit, SBOM, OSV matching",Run actions/upload-artifact@v4,3,1.0,1.0,1.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Run shivammathur/setup-php@v2,3,3.0,3.0,3.0
+F,cold,"Dependencies - audit, SBOM, OSV matching",Set up job,3,2.0,1.5,2.5
+F,cold,Gitleaks,Complete job,3,0.0,0.0,0.0
+F,cold,Gitleaks,Gitleaks (working tree of this commit),3,1.0,1.0,1.0
+F,cold,Gitleaks,Install Gitleaks,3,0.0,0.0,0.5
+F,cold,Gitleaks,Post Run actions/checkout@v4,3,0.0,0.0,0.5
+F,cold,Gitleaks,Run actions/checkout@v4,3,1.0,1.0,1.5
+F,cold,Gitleaks,Run actions/upload-artifact@v4,3,1.0,1.0,1.5
+F,cold,Gitleaks,Set up job,3,1.0,1.0,1.0
+F,cold,Psalm taint analysis,Complete job,3,0.0,0.0,0.0
+F,cold,Psalm taint analysis,Composer download cache (warm runs only),3,0.0,0.0,0.0
+F,cold,Psalm taint analysis,Install dependencies and Psalm (job-local; the SBOM job is not affected),3,13.0,12.5,13.0
+F,cold,Psalm taint analysis,Post Run actions/checkout@v4,3,1.0,0.5,1.0
+F,cold,Psalm taint analysis,Psalm --taint-analysis,3,7.0,7.0,8.5
+F,cold,Psalm taint analysis,Run actions/checkout@v4,3,2.0,1.5,2.0
+F,cold,Psalm taint analysis,Run actions/upload-artifact@v4,3,1.0,1.0,1.5
+F,cold,Psalm taint analysis,Run shivammathur/setup-php@v2,3,3.0,3.0,3.5
+F,cold,Psalm taint analysis,Set up job,3,2.0,1.5,3.0
+F,cold,Security gate,Complete job,3,0.0,0.0,0.5
+F,cold,Security gate,"Enforce the gate decision (0 pass, 1 block, 2 review, 3 incomplete)",3,0.0,0.0,0.0
+F,cold,Security gate,"Normalise, triage and decide",3,0.0,0.0,0.0
+F,cold,Security gate,Post Run actions/checkout@v4,3,0.0,0.0,0.5
+F,cold,Security gate,Run actions/checkout@v4,3,5.0,3.0,5.5
+F,cold,Security gate,Run actions/download-artifact@v4,3,1.0,0.5,1.5
+F,cold,Security gate,Run actions/upload-artifact@v4,3,1.0,1.0,1.0
+F,cold,Security gate,Run manifest,3,1.0,0.5,1.0
+F,cold,Security gate,Set up job,3,3.0,2.0,3.0
+F,cold,Semgrep (p/php + Laravel rules),Complete job,3,0.0,0.0,0.0
+F,cold,Semgrep (p/php + Laravel rules),Install Semgrep CLI,3,11.0,10.0,11.0
+F,cold,Semgrep (p/php + Laravel rules),Post Run actions/checkout@v4,3,0.0,0.0,0.0
+F,cold,Semgrep (p/php + Laravel rules),Run actions/checkout@v4,3,1.0,1.0,1.5
+F,cold,Semgrep (p/php + Laravel rules),Run actions/upload-artifact@v4,3,1.0,1.0,1.0
+F,cold,Semgrep (p/php + Laravel rules),Semgrep,3,3.0,2.5,3.5
+F,cold,Semgrep (p/php + Laravel rules),Set up job,3,1.0,1.0,1.5
+F,cold,Tests and type checks,Complete job,3,0.0,0.0,0.0
+F,cold,Tests and type checks,Composer download cache (warm runs only),3,0.0,0.0,0.0
+F,cold,Tests and type checks,Install locked dependencies,3,8.0,8.0,8.5
+F,cold,Tests and type checks,PHPStan (type checks; not used by the gate),3,5.0,5.0,5.5
+F,cold,Tests and type checks,PHPUnit (application tests),3,1.0,0.5,1.0
+F,cold,Tests and type checks,Post Run actions/checkout@v4,3,1.0,0.5,1.0
+F,cold,Tests and type checks,Prepare application,3,1.0,1.0,1.0
+F,cold,Tests and type checks,Run actions/checkout@v4,3,1.0,1.0,1.5
+F,cold,Tests and type checks,Run actions/upload-artifact@v4,3,2.0,1.5,2.0
+F,cold,Tests and type checks,Run shivammathur/setup-php@v2,3,3.0,3.0,3.0
+F,cold,Tests and type checks,Set up job,3,1.0,1.0,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Audit the locked state,10,1.0,0.25,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Check SBOM validity and completeness against composer.lock,10,18.0,15.25,19.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Complete job,10,0.0,0.0,0.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Composer download cache (warm runs only),10,1.0,1.0,1.75
+F,warm,"Dependencies - audit, SBOM, OSV matching",Generate the SBOM from the same state,10,0.0,0.0,0.75
+F,warm,"Dependencies - audit, SBOM, OSV matching",Install OSV-Scanner,10,0.0,0.0,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Install SBOM generator outside the project,10,3.0,3.0,3.75
+F,warm,"Dependencies - audit, SBOM, OSV matching",Install locked dependencies,10,4.5,4.0,5.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Match vulnerabilities using the SBOM as input (OSV-Scanner),10,0.5,0.0,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Post Composer download cache (warm runs only),10,0.0,0.0,0.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Post Run actions/checkout@v4,10,0.5,0.0,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Prove composer.json and composer.lock did not change,10,0.0,0.0,0.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Run actions/checkout@v4,10,1.5,1.0,2.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Run actions/upload-artifact@v4,10,1.0,1.0,1.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Run shivammathur/setup-php@v2,10,3.0,3.0,3.0
+F,warm,"Dependencies - audit, SBOM, OSV matching",Set up job,10,1.0,1.0,2.0
+F,warm,Gitleaks,Complete job,10,0.0,0.0,0.0
+F,warm,Gitleaks,Gitleaks (working tree of this commit),10,1.0,1.0,1.0
+F,warm,Gitleaks,Install Gitleaks,10,0.0,0.0,0.75
+F,warm,Gitleaks,Post Run actions/checkout@v4,10,0.0,0.0,0.0
+F,warm,Gitleaks,Run actions/checkout@v4,10,1.0,1.0,2.0
+F,warm,Gitleaks,Run actions/upload-artifact@v4,10,1.0,1.0,1.0
+F,warm,Gitleaks,Set up job,10,1.0,1.0,1.0
+F,warm,Psalm taint analysis,Complete job,10,0.0,0.0,0.0
+F,warm,Psalm taint analysis,Composer download cache (warm runs only),10,1.5,1.0,2.75
+F,warm,Psalm taint analysis,Install dependencies and Psalm (job-local; the SBOM job is not affected),10,9.5,8.0,12.5
+F,warm,Psalm taint analysis,Post Composer download cache (warm runs only),10,0.0,0.0,0.0
+F,warm,Psalm taint analysis,Post Run actions/checkout@v4,10,0.0,0.0,1.0
+F,warm,Psalm taint analysis,Psalm --taint-analysis,10,8.0,7.0,9.5
+F,warm,Psalm taint analysis,Run actions/checkout@v4,10,2.0,1.0,2.75
+F,warm,Psalm taint analysis,Run actions/upload-artifact@v4,10,1.0,1.0,1.75
+F,warm,Psalm taint analysis,Run shivammathur/setup-php@v2,10,3.0,3.0,3.0
+F,warm,Psalm taint analysis,Set up job,10,2.0,1.25,2.0
+F,warm,Security gate,Complete job,10,0.0,0.0,0.0
+F,warm,Security gate,"Enforce the gate decision (0 pass, 1 block, 2 review, 3 incomplete)",10,0.0,0.0,0.0
+F,warm,Security gate,"Normalise, triage and decide",10,0.0,0.0,0.0
+F,warm,Security gate,Post Run actions/checkout@v4,10,0.5,0.0,1.0
+F,warm,Security gate,Run actions/checkout@v4,10,1.0,1.0,1.75
+F,warm,Security gate,Run actions/download-artifact@v4,10,1.0,1.0,1.0
+F,warm,Security gate,Run actions/upload-artifact@v4,10,1.0,1.0,1.75
+F,warm,Security gate,Run manifest,10,0.0,0.0,0.0
+F,warm,Security gate,Set up job,10,1.0,1.0,1.0
+F,warm,Semgrep (p/php + Laravel rules),Complete job,10,0.0,0.0,0.0
+F,warm,Semgrep (p/php + Laravel rules),Install Semgrep CLI,10,11.0,10.0,12.5
+F,warm,Semgrep (p/php + Laravel rules),Post Run actions/checkout@v4,10,0.0,0.0,0.0
+F,warm,Semgrep (p/php + Laravel rules),Run actions/checkout@v4,10,1.0,1.0,1.75
+F,warm,Semgrep (p/php + Laravel rules),Run actions/upload-artifact@v4,10,1.0,1.0,1.0
+F,warm,Semgrep (p/php + Laravel rules),Semgrep,10,3.5,3.0,4.0
+F,warm,Semgrep (p/php + Laravel rules),Set up job,10,1.0,1.0,1.0
+F,warm,Tests and type checks,Complete job,10,0.0,0.0,0.0
+F,warm,Tests and type checks,Composer download cache (warm runs only),10,1.0,1.0,1.0
+F,warm,Tests and type checks,Install locked dependencies,10,4.5,4.0,5.0
+F,warm,Tests and type checks,PHPStan (type checks; not used by the gate),10,5.5,4.25,6.75
+F,warm,Tests and type checks,PHPUnit (application tests),10,0.5,0.0,1.0
+F,warm,Tests and type checks,Post Composer download cache (warm runs only),10,0.0,0.0,0.0
+F,warm,Tests and type checks,Post Run actions/checkout@v4,10,0.0,0.0,0.75
+F,warm,Tests and type checks,Prepare application,10,1.0,1.0,1.0
+F,warm,Tests and type checks,Run actions/checkout@v4,10,1.0,1.0,2.0
+F,warm,Tests and type checks,Run actions/upload-artifact@v4,10,1.0,1.0,1.0
+F,warm,Tests and type checks,Run shivammathur/setup-php@v2,10,3.0,3.0,3.0
+F,warm,Tests and type checks,Set up job,10,1.0,1.0,2.0

@@ -1,0 +1,12 @@
+{
+  "name": "composer-audit",
+  "ok_codes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "exit_code": 0,
+  "seconds": 0.81,
+  "command": "composer audit --locked --format=json > reports/composer-audit.json"
+}

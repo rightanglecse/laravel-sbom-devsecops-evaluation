@@ -1,0 +1,9 @@
+{
+  "packages": {
+    "symfony/yaml": {
+      "production_use": false,
+      "input_path": false,
+      "note": "require-dev only"
+    }
+  }
+}

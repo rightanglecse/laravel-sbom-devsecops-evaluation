@@ -1,0 +1,10 @@
+{
+  "name": "semgrep",
+  "ok_codes": [
+    0,
+    1
+  ],
+  "exit_code": 0,
+  "seconds": 1.62,
+  "command": "semgrep scan --config p/php --sarif --output reports/semgrep.sarif --metrics=off --disable-version-check --timeout 60"
+}

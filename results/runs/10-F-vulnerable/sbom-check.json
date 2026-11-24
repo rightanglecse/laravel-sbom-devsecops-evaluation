@@ -1,0 +1,23 @@
+{
+  "spec_version": "1.5",
+  "schema": {
+    "valid": true,
+    "validator": "cyclonedx-python-lib 11.12.0 JsonStrictValidator(1.5)",
+    "errors": null
+  },
+  "lock_packages": 113,
+  "lock_packages_prod": 77,
+  "lock_packages_dev": 36,
+  "sbom_components": 113,
+  "intersection": 113,
+  "completeness": 1.0,
+  "jaccard": 1.0,
+  "missing_from_sbom": [],
+  "extra_in_sbom": [],
+  "dev_flag_agreement": {
+    "lock_dev_marked_dev_in_sbom": 36,
+    "lock_dev_total": 36,
+    "prod_wrongly_marked_dev": []
+  },
+  "lock_unchanged": true
+}

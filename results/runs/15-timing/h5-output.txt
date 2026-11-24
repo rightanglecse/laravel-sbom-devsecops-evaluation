@@ -1,0 +1,12 @@
+Config       n   median              IQR
+B0_warm     10     24.0    (21.5, 24.75)
+B1_warm     10     40.5     (40.0, 42.0)
+F_warm      10     51.0    (50.25, 53.5)
+B0_cold      3     26.0     (25.0, 32.5)
+B1_cold      3     40.0     (38.5, 41.0)
+F_cold       3     55.0     (55.0, 57.5)
+F_vs_B0_warm: overhead 27.0 s (112.5%), Mann-Whitney U=100.0 p=1.1e-05 (exact)
+B1_vs_B0_warm: overhead 16.5 s (68.8%), Mann-Whitney U=100.0 p=1.1e-05 (exact)
+F_vs_B0_cold: overhead 29.0 s (111.5%), Mann-Whitney U=9.0 p=0.1 (exact)
+B1_vs_B0_cold: overhead 14.0 s (53.8%), Mann-Whitney U=8.0 p=0.2 (exact)
+H5: {'threshold_s': 90, 'F_minus_B0_warm_median_s': 27.0, 'H5': 'supported'}

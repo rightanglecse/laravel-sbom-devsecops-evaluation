@@ -1,0 +1,10 @@
+{
+  "name": "phpstan",
+  "ok_codes": [
+    0,
+    1
+  ],
+  "exit_code": 1,
+  "seconds": 5.45,
+  "command": "vendor/bin/phpstan analyse app routes config --level=5 --error-format=json --no-progress --memory-limit=2G > reports/phpstan.json"
+}

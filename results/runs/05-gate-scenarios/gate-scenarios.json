@@ -1,0 +1,97 @@
+{
+  "scenarios": [
+    {
+      "id": "G1",
+      "description": "Clean control: all mandatory reports present, no findings",
+      "expected": "pass (0)",
+      "actual": "pass (0)",
+      "correct": true,
+      "reason": "no findings",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G2",
+      "description": "Synthetic secret committed in application code",
+      "expected": "block (1)",
+      "actual": "block (1)",
+      "correct": true,
+      "reason": "T3: secret committed in application code",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G3",
+      "description": "Direct dependency with a critical advisory and a fixed version",
+      "expected": "block (1)",
+      "actual": "block (1)",
+      "correct": true,
+      "reason": "T3: direct dependency, critical, fixed version available",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G4",
+      "description": "High-confidence SQL injection finding in production code",
+      "expected": "block (1)",
+      "actual": "block (1)",
+      "correct": true,
+      "reason": "T3: high-confidence SAST finding (error)",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G5",
+      "description": "Transitive advisory on a request-handling package; no use evidence",
+      "expected": "review (2)",
+      "actual": "review (2)",
+      "correct": true,
+      "reason": "T4: no input-path evidence recorded",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G6",
+      "description": "Advisory without a severity score",
+      "expected": "review (2)",
+      "actual": "review (2)",
+      "correct": true,
+      "reason": "T1: required information missing (severity, scope or fix status)",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G7",
+      "description": "SBOM report missing",
+      "expected": "incomplete (3)",
+      "actual": "incomplete (3)",
+      "correct": true,
+      "reason": "sbom: tool exited with code 1; sbom: report cyclonedx-sbom.json missing or empty",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G8",
+      "description": "Scanner exits with an error and leaves an empty report",
+      "expected": "incomplete (3)",
+      "actual": "incomplete (3)",
+      "correct": true,
+      "reason": "semgrep: tool exited with code 2; semgrep: report semgrep.sarif missing or empty",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G9",
+      "description": "Blocking advisory covered by an approved, unexpired exception",
+      "expected": "pass (0)",
+      "actual": "pass (0)",
+      "correct": true,
+      "reason": "EX: approved exception (owner thesis author, expires 2099-12-31): upgrade scheduled in release 1.4; TokenGuard not used (session auth only)",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    },
+    {
+      "id": "G10",
+      "description": "Advisory only in a development package with no production use",
+      "expected": "pass (0)",
+      "actual": "pass (0)",
+      "correct": true,
+      "reason": "T2: development-only package; not installed in production",
+      "legacy_workflow": "success (no decision step; every scanner continue-on-error)"
+    }
+  ],
+  "all_correct": true,
+  "correct": 10,
+  "total": 10
+}

@@ -1,0 +1,6 @@
+{
+  "id": "G8",
+  "description": "Scanner exits with an error and leaves an empty report",
+  "expected_decision": "incomplete",
+  "expected_exit": 3
+}

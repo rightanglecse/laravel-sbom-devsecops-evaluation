@@ -1,0 +1,67 @@
+{
+  "records_before": 35,
+  "records_after": 0,
+  "packages": {
+    "guzzlehttp/guzzle": {
+      "before": "7.12.1",
+      "after": "7.17.0",
+      "records": 7,
+      "cleared": 7
+    },
+    "guzzlehttp/psr7": {
+      "before": "2.12.1",
+      "after": "2.13.6",
+      "records": 1,
+      "cleared": 1
+    },
+    "laravel/framework": {
+      "before": "v12.62.0",
+      "after": "v12.73.0",
+      "records": 4,
+      "cleared": 4
+    },
+    "league/commonmark": {
+      "before": "2.8.2",
+      "after": "2.10.7",
+      "records": 12,
+      "cleared": 12
+    },
+    "league/flysystem": {
+      "before": "3.34.0",
+      "after": "3.36.0",
+      "records": 1,
+      "cleared": 1
+    },
+    "symfony/http-foundation": {
+      "before": "v7.4.13",
+      "after": "v7.4.23",
+      "records": 5,
+      "cleared": 5
+    },
+    "symfony/http-kernel": {
+      "before": "v7.4.13",
+      "after": "v7.4.23",
+      "records": 1,
+      "cleared": 1
+    },
+    "symfony/mime": {
+      "before": "v7.4.13",
+      "after": "v7.4.22",
+      "records": 1,
+      "cleared": 1
+    },
+    "symfony/routing": {
+      "before": "v7.4.13",
+      "after": "v7.4.23",
+      "records": 1,
+      "cleared": 1
+    },
+    "symfony/yaml": {
+      "before": "v7.4.13",
+      "after": "v7.4.23",
+      "records": 2,
+      "cleared": 2
+    }
+  },
+  "new_after_update": []
+}

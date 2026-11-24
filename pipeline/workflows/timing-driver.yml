@@ -1,0 +1,38 @@
+name: Timing experiment (H5)
+
+# One click runs the whole timing experiment on GitHub:
+# 1 priming run per configuration, then 10 warm runs interleaved B0, B1, F,
+# then 3 cold runs each, all on the same branch. Takes about 2 hours.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch to time (must not change during the experiment)
+        default: timing
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  drive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trigger and wait for 42 runs
+        run: bash analysis/run_timing.sh "${{ inputs.ref }}"
+
+      - name: Collect job timings and compute statistics
+        if: always()
+        run: python3 analysis/h5_timing.py --runs results/h5/runs.csv --out results/h5 | tee results/h5/h5-output.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-h5-timing
+          path: results/h5/

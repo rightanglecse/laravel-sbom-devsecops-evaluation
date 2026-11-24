@@ -1,0 +1,33 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "gitleaks"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "twilio-api-key",
+          "level": null,
+          "message": {
+            "text": "twilio-api-key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/Services/ClinicSmsGateway.php"
+                },
+                "region": {
+                  "startLine": 7
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

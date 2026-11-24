@@ -1,0 +1,16 @@
+seed,class,cwe,B0,B1,F,B0_detected_by,B1_detected_by,F_detected_by
+S01,SQL injection,CWE-89,0,0,1,,,psalm:244; semgrep:laravel-raw-sql-concatenation; semgrep:laravel-request-to-dangerous-sink
+S02,SQL injection,CWE-89,1,1,1,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound; psalm:244; semgrep:laravel-raw-sql-concatenation; semgrep:laravel-request-to-dangerous-sink
+S03,SQL injection,CWE-89,1,1,1,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound; psalm:244; semgrep:laravel-request-to-dangerous-sink
+S04,Cross-site scripting,CWE-79,0,0,1,,,semgrep:laravel-blade-unescaped-output; semgrep:laravel-markdown-raw-html
+S05,Cross-site scripting,CWE-79,0,0,1,,,semgrep:laravel-blade-unescaped-output; semgrep:laravel-markdown-raw-html
+S06,Cross-site scripting,CWE-79,1,1,1,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound; semgrep:laravel-request-to-dangerous-sink
+S07,Mass assignment,CWE-915,1,1,1,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound,phpstan:staticMethod.notFound; semgrep:laravel-mass-assignment-request-all; semgrep:laravel-model-guarded-empty
+S08,Mass assignment,CWE-915,1,1,1,phpstan:property.notFound,phpstan:property.notFound,phpstan:property.notFound; semgrep:laravel-mass-assignment-request-all
+S09,Broken access control,CWE-639,0,0,1,,,semgrep:laravel-missing-authorization
+S10,Broken access control,CWE-639,0,0,1,,,semgrep:laravel-missing-authorization
+S11,Hard-coded secret,CWE-798,0,1,1,,gitleaks:generic-api-key; gitleaks:twilio-api-key,gitleaks:generic-api-key; gitleaks:twilio-api-key
+S12,Hard-coded secret,CWE-798,0,1,1,,gitleaks:aws-access-token,gitleaks:aws-access-token
+S13,Insecure configuration (CSRF),CWE-352,0,0,1,,,semgrep:laravel-csrf-exclusion
+S14,Information exposure (debug),CWE-209,0,0,1,,,psalm:245; semgrep:laravel-debug-flag-enabled-in-config; semgrep:laravel-exception-details-in-response
+S15,Path traversal,CWE-22,0,0,1,,,semgrep:laravel-request-to-dangerous-sink

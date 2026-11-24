@@ -1,0 +1,28 @@
+{
+  "config": "B1",
+  "cache": "warm",
+  "commit": "c8e992b883c517f274956ab780b4f011c76ecc3b",
+  "ref": "bench-vulnerable",
+  "run_id": "45219696235",
+  "run_attempt": "1",
+  "workflow": "B1 conventional security baseline",
+  "runner_image": "ubuntu24 20261116.376.1",
+  "composer_lock_sha256": "4ec1c039d58dece35bd65d14b7d0b586b4f8f89851f0cc82576faafbcfd5aafa",
+  "tool_versions": {
+    "composer": [
+      "Composer version 2.11.2 2026-11-10 10:09:37"
+    ],
+    "gitleaks": [
+      "8.21.2"
+    ],
+    "php": [
+      "8.2.36"
+    ],
+    "phpstan": [
+      "PHPStan - PHP Static Analysis Tool 2.3.2"
+    ],
+    "semgrep": [
+      "1.95.0"
+    ]
+  }
+}
